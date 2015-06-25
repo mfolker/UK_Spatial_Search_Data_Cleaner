@@ -15,5 +15,7 @@ namespace UKSSDC.Models
         public string Name { get; set; }
 
         public DbGeography Location { get; set; }
+
+        public int osm_id { get; set; }
     }
 }
