@@ -4,17 +4,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace UKSSDC.Tests
 {
     [TestClass]
-    public class EastNorthingTests
+    public class PostCodeBoundingTests
     {
         [TestMethod]
-        public void EastingConversionTest()
+        public void TestMethod1()
         {
-
-        }
-
-        public void NorthingConversionTest()
-        {
-
         }
     }
 }

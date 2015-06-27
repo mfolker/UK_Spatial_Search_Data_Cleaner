@@ -42,20 +42,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\PlacesEngland.cs" />
+    <Compile Include="Models\Common.cs" />
+    <Compile Include="Models\Country.cs" />
+    <Compile Include="Models\Place.cs" />
     <Compile Include="Models\PlaceType.cs" />
+    <Compile Include="Models\PostCode.cs" />
+    <Compile Include="Models\PostCodeArea.cs" />
+    <Compile Include="Models\Road.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Data\UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="CSV\Regions\Notes.md" />
+    <None Include="Models\Notes.md" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CSV\Places\" />
     <Folder Include="CSV\PostCodes\" />
     <Folder Include="CSV\Roads\" />
-    <Folder Include="Tests\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>c6e7a0d6-c273-4de6-b121-541291c54da5</ProjectGuid>
+    <ProjectGuid>{412D2C09-644F-4F83-A479-A1946A3FE16C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>UKSSDC.Tests</RootNamespace>
@@ -50,8 +50,20 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="EastNorthingTests.cs" />
+    <Compile Include="PostCodeBoundingTests.cs" />
+    <Compile Include="NameCleaningTests.cs" />
+    <Compile Include="SearchTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UKSSDC\UKSSDC.csproj">
+      <Project>{d48beb23-86a4-4747-b90b-7784da9c0f5a}</Project>
+      <Name>UKSSDC</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Notes.md" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
