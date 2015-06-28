@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UKSSDC.Models
+namespace UKSSDC.Models.Enums
 {
-    public enum PlaceType
+    public enum Country
     {
-        //Place types look to include lots of garbage. Include later. 
+        England = 0,
+        Scotland = 1,
+        Wales = 2
     }
 }

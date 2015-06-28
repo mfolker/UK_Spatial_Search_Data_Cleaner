@@ -8,6 +8,8 @@ namespace UKSSDC.Models
 {
     public abstract class Common
     {
+        public int id { get; private set; }
+
         public DateTime created { get; private set; }
 
         public DateTime updated { get; private set; }
