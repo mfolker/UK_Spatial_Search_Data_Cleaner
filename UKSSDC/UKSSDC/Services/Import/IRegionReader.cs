@@ -7,5 +7,6 @@ namespace UKSSDC.Services.Import
 {
     interface IRegionReader
     {
+        List<RegionRecord> Read(string filePath, int progress);
     }
 }

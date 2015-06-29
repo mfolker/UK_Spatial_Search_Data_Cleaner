@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UKSSDC.Models;
 
 namespace UKSSDC.Services.Import
 {
     interface IPlaceReader
     {
-        void ReadNext(int quantity, int progress)
+        List<PlaceRecord> Read(string filePath, int progress);
     }
 }

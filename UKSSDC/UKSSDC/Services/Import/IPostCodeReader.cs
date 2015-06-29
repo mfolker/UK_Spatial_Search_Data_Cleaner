@@ -7,5 +7,6 @@ namespace UKSSDC.Services.Import
 {
     interface IPostCodeReader
     {
+        List<PostCodeRecord> Read(string filePath, int progress);
     }
 }

@@ -7,5 +7,6 @@ namespace UKSSDC.Services.Import
 {
     interface IRoadReader
     {
+        List<RoadRecord> Read(string filePath, int progress);
     }
 }
