@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using UKSSDC.Models;
 using System.Data.Entity;
+using System.Data.Entity.Spatial;
+
 
 namespace UKSSDC.Services.Data
 {
@@ -19,9 +21,6 @@ namespace UKSSDC.Services.Data
         public DbSet<Region> Regions { get; set; }
 
         public DbSet<Road> Roads { get; set; }
-
-        //TODO: Add Entity Framework
-        //TODO: Set all DB tables to build to code first. 
 
     }
 }

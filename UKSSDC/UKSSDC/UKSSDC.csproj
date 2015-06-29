@@ -62,9 +62,16 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Data\UnitOfWork.cs" />
+    <Compile Include="Services\Import\CsvReader.cs" />
+    <Compile Include="Services\Import\IPlaceReader.cs" />
+    <Compile Include="Services\Import\IPostCodeReader.cs" />
+    <Compile Include="Services\Import\IRegionReader.cs" />
+    <Compile Include="Services\Import\IRoadReader.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="CSV\Regions\Notes.md" />
     <None Include="Models\Notes.md" />
     <None Include="packages.config" />
@@ -73,6 +80,7 @@
     <Folder Include="CSV\Places\" />
     <Folder Include="CSV\PostCodes\" />
     <Folder Include="CSV\Roads\" />
+    <Folder Include="Services\EastingNorthings\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

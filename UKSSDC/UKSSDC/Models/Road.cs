@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.Spatial;
+using System.Data.Entity.Spatial;
 using UKSSDC.Models.Enums;
 
 namespace UKSSDC.Models
