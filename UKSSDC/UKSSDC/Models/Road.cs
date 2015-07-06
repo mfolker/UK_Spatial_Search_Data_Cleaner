@@ -10,16 +10,16 @@ namespace UKSSDC.Models
 {
     public class Road : Common
     {
-        public string name { get; private set; }
+        public string Name { get; private set; }
 
-        public DbGeography path { get; private set; } //WKT
+        public DbGeography Path { get; private set; } //WKT
 
-        public int osm_id { get; private set; }
+        public int OsmId { get; private set; }
 
-        public string referenceNumber { get; private set; }
+        public string ReferenceNumber { get; private set; }
 
-        public string type { get; private set; } //Not implemented as ENUM owing to limited information about exact road types from data provider
+        public string Type { get; private set; } //Not implemented as ENUM owing to limited information about exact road types from data provider
 
-        public int maxSpeed { get; private set; }
+        public int MaxSpeed { get; private set; }
     }
 }

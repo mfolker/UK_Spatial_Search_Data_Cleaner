@@ -10,14 +10,14 @@ namespace UKSSDC.Models
 {
     public class PostCode : Common
     {
-        public string postcode { get; private set; }
+        public string Postcode { get; private set; }
 
-        public string positionalQualityIndicator { get; private set; }
+        public string PositionalQualityIndicator { get; private set; }
 
-        public int eastings { get; private set; }
+        public int Eastings { get; private set; }
 
-        public int northings { get; private set; }
+        public int Northings { get; private set; }
 
-        public DbGeography location { get; private set; } //WKT
+        public DbGeography Location { get; private set; } //WKT
     }
 }

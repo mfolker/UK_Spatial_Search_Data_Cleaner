@@ -59,8 +59,13 @@
     <Compile Include="Models\Enums\RecordType.cs" />
     <Compile Include="Models\Region.cs" />
     <Compile Include="Models\Road.cs" />
+    <Compile Include="Places.cs" />
+    <Compile Include="PostCodePerimeters.cs" />
+    <Compile Include="PostCodes.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Regions.cs" />
+    <Compile Include="Roads.cs" />
     <Compile Include="Services\Data\UnitOfWork.cs" />
     <Compile Include="Services\Import\CsvReader.cs" />
     <Compile Include="Services\Import\IPlaceReader.cs" />
@@ -80,6 +85,7 @@
     <Folder Include="CSV\Places\" />
     <Folder Include="CSV\PostCodes\" />
     <Folder Include="CSV\Roads\" />
+    <Folder Include="Migrations\" />
     <Folder Include="Services\EastingNorthings\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

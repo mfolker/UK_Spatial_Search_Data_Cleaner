@@ -9,9 +9,9 @@ namespace UKSSDC.Models
 {
     public class PostCodePerimeter : Common
     {
-        public string outwardCode { get; private set; }
+        public string OutwardCode { get; private set; }
 
-        public DbGeography perimeter { get; private set; } //WKT
+        public DbGeography Perimeter { get; private set; } //WKT
 
 
     }

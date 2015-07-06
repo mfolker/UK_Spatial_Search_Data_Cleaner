@@ -10,12 +10,12 @@ namespace UKSSDC.Models
 {
     public class Place : Common
     {
-        public string name { get; set; }
+        public string Name { get; set; }
 
-        public DbGeography location { get; set; } //WKT
+        public DbGeography Location { get; set; } //WKT
 
-        public int osm_id { get; set; }
+        public int OsmId { get; set; }
 
-        public Country country { get; private set; }
+        public Country Country { get; private set; }
     }
 }
