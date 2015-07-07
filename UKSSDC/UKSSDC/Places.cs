@@ -16,6 +16,11 @@ namespace UKSSDC
             _placeReader = placeReader;
         }
 
+        public Places()
+        {
+            // TODO: Complete member initialization
+        }
+
         public bool CheckComplete()
         {
             return true;

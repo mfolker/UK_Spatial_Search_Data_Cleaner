@@ -14,17 +14,19 @@ namespace UKSSDC
 
             Console.WriteLine("Starting to build your UK Spatial Search Database");
 
-            if (!Places.CheckComplete())
+            Places places = new Places();
+
+            if (!places.CheckComplete())
             {
                 //Start or carry on importing places
 
-                Places.Start();
+                places.Start();
             }
             else
             {
                 //TODO: Output total number of places imported.
 
-                Places.Complete();
+                places.Complete();
 
             }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UKSSDC.Models;
@@ -5,7 +6,7 @@ using UKSSDC.Models.Enums;
 
 namespace UKSSDC.Services.Import
 {
-    internal class ProgressReporter : IProgressReporter
+    public class ProgressReporter : IProgressReporter
     {
         public List<ImportProgress> Report(RecordType recordType)
         {
@@ -28,7 +29,7 @@ namespace UKSSDC.Services.Import
                     break;
             }
             
-            //throw new System.NotImplementedException();
+            throw new System.NotImplementedException();
         }
 
 
@@ -38,9 +39,9 @@ namespace UKSSDC.Services.Import
 
             string[] files = Directory.GetFiles("CSV/", "*.*", SearchOption.AllDirectories);
 
+            
 
-
-            throw new System.NotImplementedException();
+            return true;
         }
     }
 }
