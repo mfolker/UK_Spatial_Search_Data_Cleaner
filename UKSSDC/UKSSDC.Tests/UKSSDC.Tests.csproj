@@ -56,6 +56,7 @@
     <Compile Include="NameCleaningTests.cs" />
     <Compile Include="SearchTests.cs" />
     <Compile Include="Services\Import\CsvReaderTests.cs" />
+    <Compile Include="Services\Import\ProgressReporterTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UKSSDC\UKSSDC.csproj">

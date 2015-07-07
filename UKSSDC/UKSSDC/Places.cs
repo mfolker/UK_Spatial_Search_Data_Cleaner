@@ -1,26 +1,43 @@
 using System;
+using UKSSDC.Services.Import;
+using UKSSDC.Models.Enums;
 
 namespace UKSSDC
 {
-    static class Places
+    public class Places
     {
-        public static bool CheckComplete()
+
+        private IPlaceReader _placeReader;
+        private IProgressReporter _progressReporter;
+
+        public Places(IPlaceReader placeReader, IProgressReporter progressReporter)
+        {
+            _progressReporter = progressReporter;
+            _placeReader = placeReader;
+        }
+
+        public bool CheckComplete()
         {
             return true;
         }
 
-        internal static void Start()
+        public void Start()
         {
-            Progress(); 
+            //Todo: check progess
+
+            _progressReporter.Report(RecordType.Place);
+            
+            //Loop through each file, and process each record.
+
+            //Todo: Read the csv into memory.
+
+            //Todo: Loop through every line and format correctly
+
+            Complete();
 
         }
 
-        private static void Progress()
-        {
-            throw new NotImplementedException();
-        }
-
-        internal static void Complete()
+        internal void Complete()
         {
             //TODO: Dry up? 
 

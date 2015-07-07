@@ -6,7 +6,7 @@ using UKSSDC.Models;
 
 namespace UKSSDC.Services.Import
 {
-    interface IPlaceReader
+    public interface IPlaceReader
     {
         List<PlaceRecord> Read(string filePath, int progress);
     }

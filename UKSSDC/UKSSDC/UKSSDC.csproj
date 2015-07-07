@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Services\Import\IProgressReporter.cs" />
     <Compile Include="Models\Common.cs" />
     <Compile Include="Models\Enums\Country.cs" />
     <Compile Include="Models\Enums\RegionType.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="Services\Import\IPostCodeReader.cs" />
     <Compile Include="Services\Import\IRegionReader.cs" />
     <Compile Include="Services\Import\IRoadReader.cs" />
+    <Compile Include="Services\Import\ProgressReporter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
