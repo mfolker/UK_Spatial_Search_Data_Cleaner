@@ -48,6 +48,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Migrations\201507072211261_Initial.cs" />
+    <Compile Include="Migrations\201507072211261_Initial.Designer.cs">
+      <DependentUpon>201507072211261_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Services\Import\IProgressReporter.cs" />
     <Compile Include="Models\Common.cs" />
     <Compile Include="Models\Enums\Country.cs" />
@@ -87,8 +92,12 @@
     <Folder Include="CSV\Places\" />
     <Folder Include="CSV\PostCodes\" />
     <Folder Include="CSV\Roads\" />
-    <Folder Include="Migrations\" />
     <Folder Include="Services\EastingNorthings\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201507072211261_Initial.resx">
+      <DependentUpon>201507072211261_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

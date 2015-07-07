@@ -37,7 +37,8 @@ namespace UKSSDC.Services.Import
         {
             //TODO: Loop through every sub directory and file of /CSV/* then 
 
-            string[] files = Directory.GetFiles("CSV/", "*.*", SearchOption.AllDirectories);
+            //TODO: Adjust to take relative paths
+            string[] files = Directory.GetFiles("C:\\Users\\Matthew\\Desktop\\Project\\Implementation\\Maps Data\\UK_Spatial_Search_Data_Cleaner\\UKSSDC\\UKSSDC\\CSV", "*.*", SearchOption.AllDirectories);
 
             
 
