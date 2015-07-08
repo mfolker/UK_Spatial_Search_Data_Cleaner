@@ -4,6 +4,7 @@ using System.IO;
 using UKSSDC.Models;
 using UKSSDC.Models.Enums;
 
+
 namespace UKSSDC.Services.Import
 {
     public class ProgressReporter : IProgressReporter
@@ -33,16 +34,33 @@ namespace UKSSDC.Services.Import
         }
 
 
-        public bool Initialise()
+        public bool Initialise(string path = null)
         {
             //TODO: Loop through every sub directory and file of /CSV/* then 
 
-            //TODO: Adjust to take relative paths
-            string[] files = Directory.GetFiles("C:\\Users\\Matthew\\Desktop\\Project\\Implementation\\Maps Data\\UK_Spatial_Search_Data_Cleaner\\UKSSDC\\UKSSDC\\CSV", "*.*", SearchOption.AllDirectories);
+            if (path == null)
+            {
+                path =
+                    "C:\\Users\\Matthew\\Desktop\\Project\\Implementation\\Maps Data\\UK_Spatial_Search_Data_Cleaner\\UKSSDC\\UKSSDC\\CSV";
+            }
 
-            
+            string[] directories = Directory.GetDirectories(path, "*");
+
+
+            //TODO: Adjust to take relative paths
+            string[] files = Directory.GetFiles(path, "*.*", SearchOption.AllDirectories);
+
+            foreach (string file in files)
+            {
+                string fileName = Path.GetFileName(file); 
+
+
+                //TODO: Log file outputs. 
+                //TODO: Research logging.
+            }
 
             return true;
         }
+
     }
 }

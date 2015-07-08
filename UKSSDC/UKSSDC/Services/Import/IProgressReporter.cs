@@ -9,6 +9,6 @@ namespace UKSSDC.Services.Import
 
         List<ImportProgress> Report(RecordType recordType);
 
-        bool Initialise(); 
+        bool Initialise(string path); 
     }
 }

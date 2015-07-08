@@ -23,7 +23,7 @@ namespace UKSSDC.Tests.Services.Import
 
             IProgressReporter reporter = new ProgressReporter();
 
-            bool result = reporter.Initialise(); 
+            bool result = reporter.Initialise(null); 
 
             //TODO: Assert
 
