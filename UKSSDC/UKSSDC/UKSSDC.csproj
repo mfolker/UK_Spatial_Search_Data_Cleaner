@@ -52,6 +52,10 @@
     <Compile Include="Migrations\201507072211261_Initial.Designer.cs">
       <DependentUpon>201507072211261_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507082250014_TurnOnProgressTracking.cs" />
+    <Compile Include="Migrations\201507082250014_TurnOnProgressTracking.Designer.cs">
+      <DependentUpon>201507082250014_TurnOnProgressTracking.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Services\Import\IProgressReporter.cs" />
     <Compile Include="Models\Common.cs" />
@@ -97,6 +101,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201507072211261_Initial.resx">
       <DependentUpon>201507072211261_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507082250014_TurnOnProgressTracking.resx">
+      <DependentUpon>201507082250014_TurnOnProgressTracking.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

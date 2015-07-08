@@ -23,6 +23,8 @@ namespace UKSSDC.Services.Data
 
         public DbSet<Road> Roads { get; set; }
 
+        public DbSet<ImportProgress> ImportProgress { get; set; }
+
         public UnitOfWork() : base("DefaultConnection")
         {
             Configuration.LazyLoadingEnabled = false;

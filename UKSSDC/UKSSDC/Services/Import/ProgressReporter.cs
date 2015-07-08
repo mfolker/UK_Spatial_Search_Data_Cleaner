@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using System.IO;
 using UKSSDC.Models;
 using UKSSDC.Models.Enums;
+using UKSSDC.Services.Data;
 
 
 namespace UKSSDC.Services.Import
 {
     public class ProgressReporter : IProgressReporter
     {
+        private string[] directories;
+
+        public UnitOfWork UnitOfWork;
+
+
         public List<ImportProgress> Report(RecordType recordType)
         {
             switch (recordType)
@@ -44,22 +50,71 @@ namespace UKSSDC.Services.Import
                     "C:\\Users\\Matthew\\Desktop\\Project\\Implementation\\Maps Data\\UK_Spatial_Search_Data_Cleaner\\UKSSDC\\UKSSDC\\CSV";
             }
 
-            string[] directories = Directory.GetDirectories(path, "*");
 
-
-            //TODO: Adjust to take relative paths
-            string[] files = Directory.GetFiles(path, "*.*", SearchOption.AllDirectories);
-
-            foreach (string file in files)
+            try
             {
-                string fileName = Path.GetFileName(file); 
+                directories = Directory.GetDirectories(path, "*");
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Sorry, directory path isn't valid");
 
+                //TODO: Handle program flow if the directory isn't valid.
 
-                //TODO: Log file outputs. 
-                //TODO: Research logging.
+                throw;
+
+            }
+            
+
+            foreach (string directory in directories)
+            {
+                if (directory.Contains("Places"))
+                {
+                    
+                }
+                else if (directory.Contains("PostCodes"))
+                {
+                    
+                }
+                else if (directory.Contains("Regions"))
+                {
+                    
+                }
+                else if (directory.Contains("Roads"))
+                {
+
+                }
+                else
+                {
+                    //TODO: Implement actions for others
+                }
+
             }
 
             return true;
+        }
+
+        //TODO: Review use of Async 
+        //To anybody reading this. I'm mostly using async here because I can, when I find a way of writing all records at once, it might be more appropriate. 
+        private async void AddRecord(string directory)
+        {
+            string[] files = Directory.GetFiles(directory, "*.*", SearchOption.AllDirectories);
+
+            //TODO: Determine if there is a cleaner way of doing this, i.e. saving all records at once. 
+
+            foreach (string file in files)
+            {
+                if (file.Contains(".csvt")) //Stops the program trying to handle csv
+                {
+                    break;
+                }
+
+                //TODO: Isolate file name.
+
+                var progressRecord = new ImportProgress(); 
+               
+
+            }
         }
 
     }
