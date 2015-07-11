@@ -10,9 +10,9 @@ namespace UKSSDC.Services.Import
 {
     public class ProgressReporter : IProgressReporter
     {
-        private string[] directories;
+        private string[] _directories; 
 
-        public UnitOfWork UnitOfWork;
+        private IUnitOfWork _unitOfWork;
 
 
         public List<ImportProgress> Report(RecordType recordType)
@@ -36,7 +36,7 @@ namespace UKSSDC.Services.Import
                     break;
             }
             
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
 
@@ -53,7 +53,7 @@ namespace UKSSDC.Services.Import
 
             try
             {
-                directories = Directory.GetDirectories(path, "*");
+                _directories = Directory.GetDirectories(path, "*");
             }
             catch (Exception)
             {
@@ -66,7 +66,7 @@ namespace UKSSDC.Services.Import
             }
             
 
-            foreach (string directory in directories)
+            foreach (string directory in _directories)
             {
                 if (directory.Contains("Places"))
                 {
@@ -96,7 +96,7 @@ namespace UKSSDC.Services.Import
 
         //TODO: Review use of Async 
         //To anybody reading this. I'm mostly using async here because I can, when I find a way of writing all records at once, it might be more appropriate. 
-        private async void AddRecord(string directory)
+        public async void AddRecord(string directory, RecordType type)
         {
             string[] files = Directory.GetFiles(directory, "*.*", SearchOption.AllDirectories);
 
@@ -111,8 +111,11 @@ namespace UKSSDC.Services.Import
 
                 //TODO: Isolate file name.
 
-                var progressRecord = new ImportProgress(); 
-               
+                var progressRecord = ImportProgress.Create(file, type);
+
+                _unitOfWork.ImportProgress.Add(progressRecord);
+
+                await UnitOfWork.SaveChangesAsync(); 
 
             }
         }

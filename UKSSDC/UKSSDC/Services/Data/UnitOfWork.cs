@@ -11,7 +11,7 @@ using UKSSDC.Migrations;
 
 namespace UKSSDC.Services.Data
 {
-    public class UnitOfWork : DbContext
+    public class UnitOfWork : DbContext, IUnitOfWork
     {
         public DbSet<Place> Places { get; set; }
 
@@ -31,6 +31,8 @@ namespace UKSSDC.Services.Data
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<UnitOfWork, Configuration>());
             Database.Initialize(false);
         }
+
+        //TODO: Add exception handling for failed database writes 
 
     }
 }

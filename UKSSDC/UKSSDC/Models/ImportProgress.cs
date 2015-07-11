@@ -11,14 +11,14 @@ namespace UKSSDC.Models
     {
         public RecordType RecordType { get; private set; }
 
-        public string FileName { get; private set; }
+        public string FileName { get; set; }
 
         public int RecordNumber { get; private set; }
 
         public bool Complete { get; private set; }
 
         //TODO: Check use of static is correct here.
-        public static ImportProgress Add(string filename, RecordType type) 
+        public static ImportProgress Create(string filename, RecordType type) 
         {
             return new ImportProgress
             {
