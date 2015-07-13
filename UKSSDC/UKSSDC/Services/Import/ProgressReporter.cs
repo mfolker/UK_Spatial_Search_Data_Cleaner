@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UKSSDC.Models;
 using UKSSDC.Models.Enums;
 using UKSSDC.Services.Data;
@@ -12,8 +13,12 @@ namespace UKSSDC.Services.Import
     {
         private string[] _directories; 
 
-        private IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
+        public ProgressReporter(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
 
         public List<ImportProgress> Report(RecordType recordType)
         {
@@ -96,11 +101,13 @@ namespace UKSSDC.Services.Import
 
         //TODO: Review use of Async 
         //To anybody reading this. I'm mostly using async here because I can, when I find a way of writing all records at once, it might be more appropriate. 
-        public async void AddRecord(string directory, RecordType type)
+        public void AddRecord(string directory, RecordType type)
         {
             string[] files = Directory.GetFiles(directory, "*.*", SearchOption.AllDirectories);
 
             //TODO: Determine if there is a cleaner way of doing this, i.e. saving all records at once. 
+
+            List<ImportProgress> preStore = new List<ImportProgress>();
 
             foreach (string file in files)
             {
@@ -113,11 +120,16 @@ namespace UKSSDC.Services.Import
 
                 var progressRecord = ImportProgress.Create(file, type);
 
-                _unitOfWork.ImportProgress.Add(progressRecord);
+                preStore.Add(progressRecord);
 
-                await UnitOfWork.SaveChangesAsync(); 
+                //_unitOfWork.ImportProgress.Add(progressRecord);
 
+                //_unitOfWork.SaveASync();
             }
+
+            _unitOfWork.ImportProgress.AddRange(preStore.AsEnumerable()); 
+
+            _unitOfWork.SaveASync();
         }
 
     }

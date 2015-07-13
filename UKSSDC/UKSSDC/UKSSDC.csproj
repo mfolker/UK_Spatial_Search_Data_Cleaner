@@ -101,6 +101,7 @@
     <Folder Include="CSV\PostCodes\" />
     <Folder Include="CSV\Roads\" />
     <Folder Include="Services\EastingNorthings\" />
+    <Folder Include="Services\Logging\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201507072211261_Initial.resx">

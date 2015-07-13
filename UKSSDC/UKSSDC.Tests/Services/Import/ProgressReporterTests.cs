@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UKSSDC.Models.Enums;
+using UKSSDC.Services.Data;
 using UKSSDC.Services.Import;
 
 namespace UKSSDC.Tests.Services.Import
@@ -18,11 +19,13 @@ namespace UKSSDC.Tests.Services.Import
             int places = 3;
             int postcodes = 120;
             int regions = 4;
-            int roads = 3; 
+            int roads = 3;
+
+            var uow = new UnitOfWork();
 
             //TODO: Act
 
-            IProgressReporter reporter = new ProgressReporter();
+            IProgressReporter reporter = new ProgressReporter(uow);
 
             bool result = reporter.Initialise(null); 
 
@@ -38,12 +41,14 @@ namespace UKSSDC.Tests.Services.Import
         public void AddRecordTest()
         {
             //TODO: Arrange
+            //TODO: Mock Dependencies
 
+            var uow = new UnitOfWork();
             string TestPath = "C:\\Users\\Matthew\\Desktop\\Project\\Implementation\\Maps Data\\UK_Spatial_Search_Data_Cleaner\\UKSSDC\\UKSSDC\\CSV\\Places"; 
             
             //TODO: Act
             
-            ProgressReporter reporter = new ProgressReporter();
+            ProgressReporter reporter = new ProgressReporter(uow);
 
             reporter.AddRecord(TestPath, RecordType.Place);
 

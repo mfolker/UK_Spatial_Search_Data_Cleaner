@@ -1,9 +1,10 @@
+using System;
 using System.Data.Entity;
 using UKSSDC.Models;
 
 namespace UKSSDC.Services.Data
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork : IDisposable
     {
         DbSet<Place> Places { get; set; }
         DbSet<PostCode> PostCodes { get; set; }
@@ -11,5 +12,10 @@ namespace UKSSDC.Services.Data
         DbSet<Region> Regions { get; set; }
         DbSet<Road> Roads { get; set; }
         DbSet<ImportProgress> ImportProgress { get; set; }
+
+        void Save();
+
+        void SaveASync();
+
     }
 }
