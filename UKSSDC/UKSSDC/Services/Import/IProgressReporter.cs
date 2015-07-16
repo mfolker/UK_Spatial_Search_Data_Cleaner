@@ -4,11 +4,12 @@ using UKSSDC.Models.Enums;
 
 namespace UKSSDC.Services.Import
 {
-    public interface IProgressReporter
+    public interface IProgressReporter : IDependency
     {
 
         List<ImportProgress> Report(RecordType recordType);
 
-        bool Initialise(string path); 
+        bool Initialise(string path);
+
     }
 }

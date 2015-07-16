@@ -4,7 +4,7 @@ using UKSSDC.Models;
 
 namespace UKSSDC.Services.Data
 {
-    public interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork : IDependency
     {
         DbSet<Place> Places { get; set; }
         DbSet<PostCode> PostCodes { get; set; }

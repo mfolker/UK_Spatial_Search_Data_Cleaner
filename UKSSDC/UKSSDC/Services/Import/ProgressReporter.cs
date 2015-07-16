@@ -45,7 +45,7 @@ namespace UKSSDC.Services.Import
         }
 
 
-        public bool Initialise(string path = null)
+        public bool Initialise(string path)
         {
             if (path == null) //TODO: Take the path that the program is operating from.
             {
@@ -92,20 +92,18 @@ namespace UKSSDC.Services.Import
             return true;
         }
 
-        //TODO: Review use of Async 
+        //TODO: Review use of Async - refactoring required to use.
         //To anybody reading this. I'm mostly using async here because I can, when I find a way of writing all records at once, it might be more appropriate. 
         private void AddRecord(string directory, RecordType type)
         {
             string[] files = Directory.GetFiles(directory, "*.*", SearchOption.AllDirectories);
-
-            //TODO: Determine if there is a cleaner way of doing this, i.e. saving all records at once. 
 
             // ReSharper disable once SuggestVarOrType_Elsewhere
             List<ImportProgress> preStore = files.Where(file => !file.Contains(".csvt")).Select(file => ImportProgress.Create(file, type)).ToList();
 
             _unitOfWork.ImportProgress.AddRange(preStore.AsEnumerable()); 
 
-            _unitOfWork.SaveASync();
+            _unitOfWork.Save();
         }
 
     }
