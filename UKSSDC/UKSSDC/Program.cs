@@ -14,9 +14,7 @@ namespace UKSSDC
         static void Main(string[] args)
         {
 
-            //var builder = new ContainerBuilder();
-            //builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
-            //Container = builder.Build(); 
+            
 
 
             Console.WriteLine("Starting to build your UK Spatial Search Database");
@@ -40,6 +38,5 @@ namespace UKSSDC
 
         }
 
-        //public static IContainer Container { get; set; }
     }
 }

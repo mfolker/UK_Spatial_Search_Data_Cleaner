@@ -47,53 +47,46 @@ namespace UKSSDC.Services.Import
 
         public bool Initialise(string path = null)
         {
-            //TODO: Loop through every sub directory and file of /CSV/* then 
-
-            if (path == null)
+            if (path == null) //TODO: Take the path that the program is operating from.
             {
                 path =
                     "C:\\Users\\Matthew\\Desktop\\Project\\Implementation\\Maps Data\\UK_Spatial_Search_Data_Cleaner\\UKSSDC\\UKSSDC\\CSV";
             }
 
-
             try
             {
                 _directories = Directory.GetDirectories(path, "*");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Console.WriteLine("Sorry, directory path isn't valid");
-
-                //TODO: Handle program flow if the directory isn't valid.
-
-                throw;
-
+                Console.WriteLine("Exception thrown");
+                return false;
             }
             
-
             foreach (string directory in _directories)
             {
                 if (directory.Contains("Places"))
                 {
-                    
+                    AddRecord(directory, RecordType.Place);
                 }
                 else if (directory.Contains("PostCodes"))
                 {
-                    
+                    AddRecord(directory, RecordType.Postcode);
                 }
                 else if (directory.Contains("Regions"))
                 {
-                    
+                    AddRecord(directory, RecordType.Region);
                 }
                 else if (directory.Contains("Roads"))
                 {
-
+                    AddRecord(directory, RecordType.Road);
                 }
                 else
                 {
-                    //TODO: Implement actions for others
+                    Console.WriteLine("The following directory was found but is not supported by this program:");
+                    Console.WriteLine(directory);
                 }
-
             }
 
             return true;
@@ -101,31 +94,14 @@ namespace UKSSDC.Services.Import
 
         //TODO: Review use of Async 
         //To anybody reading this. I'm mostly using async here because I can, when I find a way of writing all records at once, it might be more appropriate. 
-        public void AddRecord(string directory, RecordType type)
+        private void AddRecord(string directory, RecordType type)
         {
             string[] files = Directory.GetFiles(directory, "*.*", SearchOption.AllDirectories);
 
             //TODO: Determine if there is a cleaner way of doing this, i.e. saving all records at once. 
 
-            List<ImportProgress> preStore = new List<ImportProgress>();
-
-            foreach (string file in files)
-            {
-                if (file.Contains(".csvt")) //Stops the program trying to handle csv
-                {
-                    break;
-                }
-
-                //TODO: Isolate file name.
-
-                var progressRecord = ImportProgress.Create(file, type);
-
-                preStore.Add(progressRecord);
-
-                //_unitOfWork.ImportProgress.Add(progressRecord);
-
-                //_unitOfWork.SaveASync();
-            }
+            // ReSharper disable once SuggestVarOrType_Elsewhere
+            List<ImportProgress> preStore = files.Where(file => !file.Contains(".csvt")).Select(file => ImportProgress.Create(file, type)).ToList();
 
             _unitOfWork.ImportProgress.AddRange(preStore.AsEnumerable()); 
 

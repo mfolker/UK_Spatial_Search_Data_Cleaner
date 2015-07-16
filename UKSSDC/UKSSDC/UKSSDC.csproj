@@ -51,13 +51,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201507072211261_Initial.cs" />
-    <Compile Include="Migrations\201507072211261_Initial.Designer.cs">
-      <DependentUpon>201507072211261_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201507082250014_TurnOnProgressTracking.cs" />
-    <Compile Include="Migrations\201507082250014_TurnOnProgressTracking.Designer.cs">
-      <DependentUpon>201507082250014_TurnOnProgressTracking.cs</DependentUpon>
+    <Compile Include="Migrations\201507131852254_Initial.cs" />
+    <Compile Include="Migrations\201507131852254_Initial.Designer.cs">
+      <DependentUpon>201507131852254_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Services\Data\IUnitOfWork.cs" />
@@ -97,6 +93,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Start\" />
     <Folder Include="CSV\Places\" />
     <Folder Include="CSV\PostCodes\" />
     <Folder Include="CSV\Roads\" />
@@ -104,11 +101,8 @@
     <Folder Include="Services\Logging\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201507072211261_Initial.resx">
-      <DependentUpon>201507072211261_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507082250014_TurnOnProgressTracking.resx">
-      <DependentUpon>201507082250014_TurnOnProgressTracking.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201507131852254_Initial.resx">
+      <DependentUpon>201507131852254_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

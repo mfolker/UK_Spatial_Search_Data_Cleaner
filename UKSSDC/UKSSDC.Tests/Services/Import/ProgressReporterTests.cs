@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Data.Entity.Core.Metadata.Edm;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UKSSDC.Models.Enums;
 using UKSSDC.Services.Data;
@@ -40,21 +42,30 @@ namespace UKSSDC.Tests.Services.Import
         [TestMethod]
         public void AddRecordTest()
         {
-            //TODO: Arrange
-            //TODO: Mock Dependencies
-
+            //Arrange (Mock Dependencies)
             var uow = new UnitOfWork();
-            string TestPath = "C:\\Users\\Matthew\\Desktop\\Project\\Implementation\\Maps Data\\UK_Spatial_Search_Data_Cleaner\\UKSSDC\\UKSSDC\\CSV\\Places"; 
-            
-            //TODO: Act
-            
-            ProgressReporter reporter = new ProgressReporter(uow);
+            string TestPath = "C:\\Users\\Matthew\\Desktop\\Project\\Implementation\\Maps Data\\UK_Spatial_Search_Data_Cleaner\\UKSSDC\\UKSSDC\\CSV\\Places";
 
-            reporter.AddRecord(TestPath, RecordType.Place);
+            uow.Database.ExecuteSqlCommand("DELETE FROM ImportProgresses");
+
+            // Act
+            //ProgressReporter reporter = new ProgressReporter(uow);
+            ProgressReporter progressReporter = new ProgressReporter(uow);
+            PrivateObject reporter = new PrivateObject(progressReporter);
+
+            //PrivateObject reporter = new PrivateObject(typeof(ProgressReporter(uow)));
+            object[] param = {TestPath, RecordType.Place};
+            
+            reporter.Invoke("AddRecord", param);
+             
+            //reporter.AddRecord(TestPath, RecordType.Place);
+
+            var uow2 = new UnitOfWork();
+            var placesRecords = uow2.ImportProgress.Count(x => x.RecordType == RecordType.Place);
 
             //TODO: Assert
 
-            Assert.IsTrue(true);
+            Assert.IsTrue(placesRecords == 3);
 
         }
     }

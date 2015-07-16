@@ -29,7 +29,7 @@ namespace UKSSDC.Services.Data
 
         public UnitOfWork() : base("DefaultConnection")
         {
-            Configuration.LazyLoadingEnabled = false;
+            //Configuration.LazyLoadingEnabled = false;
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<UnitOfWork, Configuration>());
             Database.Initialize(false);
         }
@@ -52,7 +52,7 @@ namespace UKSSDC.Services.Data
         {
             try
             {
-                await SaveChangesAsync();
+                int x = await SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -66,7 +66,8 @@ namespace UKSSDC.Services.Data
 
             if (ex is DbEntityValidationException)
             {
-                throw new NotImplementedException();
+
+                //throw new NotImplementedException();
             }
             else if (ex is DbUpdateException)
             {

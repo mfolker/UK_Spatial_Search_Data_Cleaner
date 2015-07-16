@@ -8,6 +8,20 @@ namespace UKSSDC.Migrations
         public override void Up()
         {
             CreateTable(
+                "dbo.ImportProgresses",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        RecordType = c.Int(nullable: false),
+                        FileName = c.String(nullable: false),
+                        RecordNumber = c.Int(nullable: false),
+                        Complete = c.Boolean(nullable: false),
+                        Created = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
+                        Updated = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
                 "dbo.Places",
                 c => new
                     {
@@ -86,6 +100,7 @@ namespace UKSSDC.Migrations
             DropTable("dbo.PostCodes");
             DropTable("dbo.PostCodePerimeters");
             DropTable("dbo.Places");
+            DropTable("dbo.ImportProgresses");
         }
     }
 }
