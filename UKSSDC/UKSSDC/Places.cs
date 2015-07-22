@@ -1,6 +1,7 @@
 using System;
 using UKSSDC.Services.Import;
 using UKSSDC.Models.Enums;
+using UKSSDC.Services.Data;
 
 namespace UKSSDC
 {
@@ -9,11 +10,13 @@ namespace UKSSDC
 
         private IPlaceReader _placeReader;
         private IProgressReporter _progressReporter;
+        private IUnitOfWork _unitOfWork;
 
-        public Places(IPlaceReader placeReader, IProgressReporter progressReporter)
+        public Places(IPlaceReader placeReader, IProgressReporter progressReporter, IUnitOfWork unitOfWork)
         {
             _progressReporter = progressReporter;
             _placeReader = placeReader;
+            _unitOfWork = unitOfWork;
         }
 
         public Places()
@@ -21,32 +24,23 @@ namespace UKSSDC
             // TODO: Complete member initialization
         }
 
-        public bool CheckComplete()
+        public Boolean Run()
         {
-            return true;
-        }
+            //Get all files that are not complete.
 
-        public void Start()
-        {
-            //Todo: check progess
+            var inCompleteFiles = _progressReporter.Report(RecordType.Place);
 
-            _progressReporter.Report(RecordType.Place);
+            if (inCompleteFiles == null)
+                return true;
             
-            //Loop through each file, and process each record.
+            foreach (var inCompleteFile in inCompleteFiles)
+            {
 
-            //Todo: Read the csv into memory.
+            }
 
-            //Todo: Loop through every line and format correctly
-
-            Complete();
-
+            return true;                 
+            
         }
 
-        internal void Complete()
-        {
-            //TODO: Dry up? 
-
-            Console.WriteLine("All places have been imported");
-        }
     }
 }

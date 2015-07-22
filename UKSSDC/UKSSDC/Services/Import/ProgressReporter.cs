@@ -59,6 +59,7 @@ namespace UKSSDC.Services.Import
             }
             catch (Exception ex)
             {
+                //TODO: Handle and log correctly. 
                 Console.WriteLine("Sorry, directory path isn't valid");
                 Console.WriteLine("Exception thrown");
                 return false;

@@ -15,7 +15,7 @@ namespace UKSSDC.Tests.Services.Import
         [TestMethod]
         public void InitialiseTest()
         {
-            //TODO: Arrange
+            //Arrange
             
             //Based on the data available at development time (see readme) the number of files in each directory should be.
             int places = 3;
@@ -25,13 +25,13 @@ namespace UKSSDC.Tests.Services.Import
 
             var uow = new UnitOfWork();
 
-            //TODO: Act
+            // Act
 
             IProgressReporter reporter = new ProgressReporter(uow);
 
             bool result = reporter.Initialise(null); 
 
-            //TODO: Assert
+            //Assert
 
             Assert.IsTrue(result);
 
@@ -63,7 +63,7 @@ namespace UKSSDC.Tests.Services.Import
             var uow2 = new UnitOfWork();
             var placesRecords = uow2.ImportProgress.Count(x => x.RecordType == RecordType.Place);
 
-            //TODO: Assert
+            //Assert
 
             Assert.IsTrue(placesRecords == 3);
 

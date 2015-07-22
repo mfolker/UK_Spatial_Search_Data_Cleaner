@@ -13,11 +13,11 @@ namespace UKSSDC.Models
 
         public string FileName { get; set; }
 
-        public int RecordNumber { get; private set; }
+        //Record number holds the number of thelast record that was processed. 
+        public int RecordNumber { get; private set; } //TODO: Change the name of this record to be more suggestive of thefunctionality
 
         public bool Complete { get; private set; }
 
-        //TODO: Check use of static is correct here.
         public static ImportProgress Create(string filename, RecordType type) 
         {
             return new ImportProgress

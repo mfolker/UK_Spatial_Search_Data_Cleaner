@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UKSSDC.Services.Data;
 
 namespace UKSSDC.Services.Import
 {
     public class CsvReader : IPlaceReader, IPostCodeReader, IRegionReader, IRoadReader
     {
-        public CsvReader ()
-	    {
-                
-	    }
+        private readonly UnitOfWork _unitOfWork;
+
+        public CsvReader (UnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
 
         List<PlaceRecord> IPlaceReader.Read (string filePath, int progress)
         {
-
 
             return null; //Placeholder
         }
@@ -33,6 +35,26 @@ namespace UKSSDC.Services.Import
         List<RoadRecord> IRoadReader.Read(string filePath, int progress)
         {
             return null; //Placeholder
+        }
+
+        int IRoadReader.TotalRecords(string filePath)
+        {
+            throw new NotImplementedException();
+        }
+
+        int IRegionReader.TotalRecords(string filePath)
+        {
+            throw new NotImplementedException();
+        }
+
+        int IPostCodeReader.TotalRecords(string filePath)
+        {
+            throw new NotImplementedException();
+        }
+
+        int IPlaceReader.TotalRecords(string filePath)
+        {
+            throw new NotImplementedException();
         }
     }
 

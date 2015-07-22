@@ -98,6 +98,8 @@
     <Folder Include="CSV\Places\" />
     <Folder Include="CSV\PostCodes\" />
     <Folder Include="CSV\Roads\" />
+    <Folder Include="Libs\" />
+    <Folder Include="Logs\" />
     <Folder Include="Services\EastingNorthings\" />
     <Folder Include="Services\Logging\" />
   </ItemGroup>

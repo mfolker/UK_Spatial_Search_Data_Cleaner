@@ -5,8 +5,10 @@ using System.Text;
 
 namespace UKSSDC.Services.Import
 {
-    interface IRoadReader
+    interface IRoadReader : IDependency
     {
         List<RoadRecord> Read(string filePath, int progress);
+
+        int TotalRecords(string filePath);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -13,10 +14,13 @@ namespace UKSSDC
 {
     class Program
     {
+        private static IContainer Container { get; set; }
+        
         static void Main(string[] args)
         {
-            Console.Write("Program starting...");
-            //TODO: Start Autofac. 
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Program starting...");
+            
             var builder = new ContainerBuilder();
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).As<IDependency>().AsImplementedInterfaces().InstancePerDependency();
 
@@ -26,20 +30,23 @@ namespace UKSSDC
             {
                 var reporter = scope.Resolve<IProgressReporter>();
 
-                Console.Write("Please enter the directory where you location data is stored, or press enter to run on default:");
+                Console.WriteLine("Please enter the directory where you location data is stored, or press enter to run on default:");
+
+                //TODO: 1 - Handle the console input. Set string to null or input
+
                 reporter.Initialise(null); 
+
+                var places = scope.Resolve<Places>();
+
+                bool placesComplete = places.Run();
+
+                //var postcodes = scope.Resolve<PostCodes>();
+
+                //bool postcodesComplete = 
             }
-
-            
-            
-
-
-
-
 
         }
 
-        private static IContainer Container { get; set; }
     }
 }
 
