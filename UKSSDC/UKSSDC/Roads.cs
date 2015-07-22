@@ -1,10 +1,15 @@
 ﻿namespace UKSSDC
 {
-    static class Roads
+    public class Roads : IRecord
     {
         public static bool CheckComplete()
         {
             return true;
+        }
+
+        public bool Run()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace UKSSDC
 {
-    static class PostCodes
+    public class PostCodes : IRecord
     {
         public static bool CheckComplete()
         {
@@ -12,6 +12,11 @@ namespace UKSSDC
         //This type of data requires conversion between easting northings and lat longs
 
         internal static void Start()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Run()
         {
             throw new NotImplementedException();
         }

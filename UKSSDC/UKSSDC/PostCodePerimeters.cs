@@ -2,16 +2,12 @@
 
 namespace UKSSDC
 {
-    static class PostCodePerimeters
+    public class PostCodePerimeters : IRecord
     {
-        public static bool CheckComplete()
+        
+        public bool Run()
         {
             throw new NotImplementedException();
-        }
-
-        internal static void Start()
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

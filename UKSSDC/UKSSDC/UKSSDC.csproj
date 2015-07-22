@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AutofacConfig.cs" />
+    <Compile Include="IRecord.cs" />
     <Compile Include="Migrations\201507131852254_Initial.cs" />
     <Compile Include="Migrations\201507131852254_Initial.Designer.cs">
       <DependentUpon>201507131852254_Initial.cs</DependentUpon>

@@ -5,7 +5,7 @@ using UKSSDC.Services.Data;
 
 namespace UKSSDC
 {
-    public class Places
+    public class Places : IRecord
     {
 
         private IPlaceReader _placeReader;
@@ -24,7 +24,7 @@ namespace UKSSDC
             // TODO: Complete member initialization
         }
 
-        public Boolean Run()
+        public bool Run()
         {
             //Get all files that are not complete.
 

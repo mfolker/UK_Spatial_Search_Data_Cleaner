@@ -10,6 +10,8 @@ using UKSSDC.Services.Data;
 using UKSSDC.Services.Import;
 
 
+//TODO: Consider restructuring so that each record can handled and recorded as successful or not.
+
 namespace UKSSDC
 {
     class Program
@@ -40,11 +42,32 @@ namespace UKSSDC
 
                 bool placesComplete = places.Run();
 
-                //var postcodes = scope.Resolve<PostCodes>();
+                var postcodes = scope.Resolve<PostCodes>();
 
-                //bool postcodesComplete = 
+                bool postcodesComplete = postcodes.Run();
+
+                if (postcodesComplete)
+                {
+                    var postcodeperimeter = scope.Resolve<PostCodePerimeters>();
+
+                    bool postcodeperimieterComplete = postcodeperimeter.Run();
+                }
+
+                var regions = scope.Resolve<Regions>();
+
+                bool regionsComplete = regions.Run();
+
+                var roads = scope.Resolve<Roads>();
+
+                bool roadsComplete = roads.Run();
+
+                //TODO: Success messages for each?
+                
+                Console.WriteLine("UKSSDC has finished running");
             }
 
+            Console.WriteLine("Press Enter to close the program");
+            Console.Read();
         }
 
     }
