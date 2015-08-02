@@ -5,9 +5,9 @@ using System.Text;
 
 namespace UKSSDC.Services.Import
 {
-    interface IPostCodeReader : IDependency
+    interface IPostcodeReader : IDependency
     {
-        List<PostCodeRecord> Read(string filePath, int progress);
+        List<PostcodeRecord> Read(string filePath, int progress);
 
         int TotalRecords(string filePath);
     }

@@ -2,6 +2,7 @@
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Shouldly;
 using UKSSDC.Models.Enums;
 using UKSSDC.Services.Data;
 using UKSSDC.Services.Import;
@@ -11,6 +12,24 @@ namespace UKSSDC.Tests.Services.Import
     [TestClass]
     public class ProgressReporterTests
     {
+
+        [TestMethod]
+        public void ReportTest()
+        {
+            var uow = new UnitOfWork();
+
+            uow.Database.ExecuteSqlCommand("DELETE FROM ImportProgresses");
+
+            InitialiseTest();
+
+            IProgressReporter reporter = new ProgressReporter(uow);
+
+            var reports = reporter.Report(RecordType.Place);
+
+            int count = reports.Count;
+
+            count.ShouldBe(3);
+        }
 
         [TestMethod]
         public void InitialiseTest()
@@ -29,7 +48,7 @@ namespace UKSSDC.Tests.Services.Import
 
             IProgressReporter reporter = new ProgressReporter(uow);
 
-            bool result = reporter.Initialise(null); 
+            bool result = reporter.Initialise(""); 
 
             //Assert
 

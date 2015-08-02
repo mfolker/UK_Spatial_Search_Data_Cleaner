@@ -1,0 +1,2 @@
+﻿DEBUG 2015-08-02 15:38:15,242   340ms Test                   Main               - test message
+DEBUG 2015-08-02 20:29:38,258    36ms Test                   TestMethod1        - Unit Test Message

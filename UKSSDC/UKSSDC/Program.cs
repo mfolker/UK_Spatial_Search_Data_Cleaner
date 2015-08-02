@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Autofac;
 using UKSSDC.Services.Data;
 using UKSSDC.Services.Import;
+using log4net;
 
 
 //TODO: Consider restructuring so that each record can handled and recorded as successful or not.
@@ -17,16 +18,39 @@ namespace UKSSDC
     class Program
     {
         private static IContainer Container { get; set; }
+        private static readonly ILog Logger = LogManager.GetLogger("Test"); 
         
         static void Main(string[] args)
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Program starting...");
+
             
             var builder = new ContainerBuilder();
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).As<IDependency>().AsImplementedInterfaces().InstancePerDependency();
+            builder.RegisterType<Places>().InstancePerLifetimeScope();
+            builder.RegisterType<Postcodes>().InstancePerLifetimeScope();
+            builder.RegisterType<PostcodePerimeters>().InstancePerLifetimeScope();
+            builder.RegisterType<Regions>().InstancePerLifetimeScope();
+            builder.RegisterType<Roads>().InstancePerLifetimeScope();
 
             Container = builder.Build();
+
+            //Empty the database?
+            Console.WriteLine("Would you like to truncate the database? Y / N");
+            string x = Console.ReadLine();
+
+            if (x == "Y" || x == "y")
+            {
+                Console.WriteLine("Emptying the database");
+                var uow = new UnitOfWork();
+                uow.Database.ExecuteSqlCommand("DELETE FROM ImportProgresses");
+                uow.Database.ExecuteSqlCommand("DELETE FROM Places");
+                uow.Database.ExecuteSqlCommand("DELETE FROM PostCodes");
+                uow.Database.ExecuteSqlCommand("DELETE FROM PostCodePerimeters");
+                uow.Database.ExecuteSqlCommand("DELETE FROM Regions");
+                uow.Database.ExecuteSqlCommand("DELETE FROM Roads");
+            }
 
             using (var scope = Container.BeginLifetimeScope())
             {
@@ -34,21 +58,21 @@ namespace UKSSDC
 
                 Console.WriteLine("Please enter the directory where you location data is stored, or press enter to run on default:");
 
-                //TODO: 1 - Handle the console input. Set string to null or input
+                string directory = Console.ReadLine(); 
 
-                reporter.Initialise(null); 
+                reporter.Initialise(directory); 
 
                 var places = scope.Resolve<Places>();
 
                 bool placesComplete = places.Run();
 
-                var postcodes = scope.Resolve<PostCodes>();
+                var postcodes = scope.Resolve<Postcodes>();
 
                 bool postcodesComplete = postcodes.Run();
 
                 if (postcodesComplete)
                 {
-                    var postcodeperimeter = scope.Resolve<PostCodePerimeters>();
+                    var postcodeperimeter = scope.Resolve<PostcodePerimeters>();
 
                     bool postcodeperimieterComplete = postcodeperimeter.Run();
                 }
@@ -72,22 +96,3 @@ namespace UKSSDC
 
     }
 }
-
-
-            //Console.WriteLine("Starting to build your UK Spatial Search Database");
-
-            //Places places = new Places();
-
-            //if (!places.CheckComplete())
-            //{
-            //    //Start or carry on importing places
-
-            //    places.Start();
-            //}
-            //else
-            //{
-            //    //TODO: Output total number of places imported.
-
-            //    places.Complete();
-
-            //}

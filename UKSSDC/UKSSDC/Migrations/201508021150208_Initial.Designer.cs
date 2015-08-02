@@ -13,7 +13,7 @@ namespace UKSSDC.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201507131852254_Initial"; }
+            get { return "201508021150208_Initial"; }
         }
         
         string IMigrationMetadata.Source

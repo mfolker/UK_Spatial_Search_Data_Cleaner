@@ -4,17 +4,17 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace UKSSDC.Tests
 {
     [TestClass]
-    public class EastNorthingTests
+    public class PlacesTests
     {
         [TestMethod]
-        public void EastingConversionTest()
+        public void RunTest()
         {
-
+            Assert.IsTrue(true);
         }
 
-        public void NorthingConversionTest()
+        public void ImportTest()
         {
-
+            Assert.IsTrue(true);
         }
     }
 }

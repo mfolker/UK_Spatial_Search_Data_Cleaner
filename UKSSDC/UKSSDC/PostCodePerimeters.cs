@@ -2,7 +2,7 @@
 
 namespace UKSSDC
 {
-    public class PostCodePerimeters : IRecord
+    public class PostcodePerimeters : IRecord
     {
         
         public bool Run()

@@ -1,4 +1,6 @@
 using System;
+using System.Data.Entity.Migrations.Model;
+using UKSSDC.Models;
 using UKSSDC.Services.Import;
 using UKSSDC.Models.Enums;
 using UKSSDC.Services.Data;
@@ -12,6 +14,8 @@ namespace UKSSDC
         private IProgressReporter _progressReporter;
         private IUnitOfWork _unitOfWork;
 
+        private bool success; 
+
         public Places(IPlaceReader placeReader, IProgressReporter progressReporter, IUnitOfWork unitOfWork)
         {
             _progressReporter = progressReporter;
@@ -19,27 +23,49 @@ namespace UKSSDC
             _unitOfWork = unitOfWork;
         }
 
-        public Places()
-        {
-            // TODO: Complete member initialization
-        }
-
         public bool Run()
         {
-            //Get all files that are not complete.
-
             var inCompleteFiles = _progressReporter.Report(RecordType.Place);
 
             if (inCompleteFiles == null)
                 return true;
             
-            foreach (var inCompleteFile in inCompleteFiles)
+            foreach (ImportProgress inCompleteFile in inCompleteFiles)
             {
-
+                string fileName = inCompleteFile.FileName; 
+                bool importSuccess = Import(inCompleteFile);
+                if (!importSuccess)
+                {
+                    //TODO: Add error logging to file. 
+                    Console.WriteLine("Problems encountered importing the following file:");
+                    Console.WriteLine(fileName);
+                }
             }
 
-            return true;                 
-            
+            if (success)
+                return true;
+            return false;
+        }
+
+        private bool Import(ImportProgress inCompleteFile)
+        {
+            //Look at where the last import got to.
+
+            //Take 2.5k from that point onwards or however many are left.
+
+            //Loop through each set of 2.5k and create new Places records (try and log exceptions)
+
+            //Save all to database. 
+
+            //Catch any exceptions when writing to the database. Skip record, log & write to console, then carry on. 
+
+            //if any records where dropped, return message to say how many. 
+
+            //or return true. 
+
+            //update how many records (recordNumber) have been completed. 
+
+            throw new NotImplementedException(); 
         }
 
     }

@@ -5,14 +5,14 @@ namespace UKSSDC.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<UKSSDC.Services.Data.UnitOfWork>
+    internal sealed class Configuration : DbMigrationsConfiguration<Services.Data.UnitOfWork>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(UKSSDC.Services.Data.UnitOfWork context)
+        protected override void Seed(Services.Data.UnitOfWork context)
         {
             //  This method will be called after migrating to the latest version.
 

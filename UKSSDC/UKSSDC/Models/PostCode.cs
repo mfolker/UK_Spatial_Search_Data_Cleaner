@@ -8,9 +8,9 @@ using System.Data.Entity.Spatial;
 
 namespace UKSSDC.Models
 {
-    public class PostCode : Common
+    public class Postcode : Common
     {
-        public string Postcode { get; private set; }
+        public string FullPostcode { get; private set; }
 
         public string PositionalQualityIndicator { get; private set; }
 

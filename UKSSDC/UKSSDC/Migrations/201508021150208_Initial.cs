@@ -36,7 +36,7 @@ namespace UKSSDC.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.PostCodePerimeters",
+                "dbo.PostcodePerimeters",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -48,11 +48,11 @@ namespace UKSSDC.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.PostCodes",
+                "dbo.Postcodes",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Postcode = c.String(),
+                        FullPostcode = c.String(),
                         PositionalQualityIndicator = c.String(),
                         Eastings = c.Int(nullable: false),
                         Northings = c.Int(nullable: false),
@@ -86,6 +86,7 @@ namespace UKSSDC.Migrations
                         ReferenceNumber = c.String(),
                         Type = c.String(),
                         MaxSpeed = c.Int(nullable: false),
+                        Country = c.Int(nullable: false),
                         Created = c.DateTime(nullable: false),
                         Updated = c.DateTime(nullable: false),
                     })
@@ -97,8 +98,8 @@ namespace UKSSDC.Migrations
         {
             DropTable("dbo.Roads");
             DropTable("dbo.Regions");
-            DropTable("dbo.PostCodes");
-            DropTable("dbo.PostCodePerimeters");
+            DropTable("dbo.Postcodes");
+            DropTable("dbo.PostcodePerimeters");
             DropTable("dbo.Places");
             DropTable("dbo.ImportProgresses");
         }

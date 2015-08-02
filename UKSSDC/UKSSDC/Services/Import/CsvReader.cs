@@ -7,11 +7,11 @@ using UKSSDC.Services.Data;
 
 namespace UKSSDC.Services.Import
 {
-    public class CsvReader : IPlaceReader, IPostCodeReader, IRegionReader, IRoadReader
+    public class CsvReader : IPlaceReader, IPostcodeReader, IRegionReader, IRoadReader
     {
-        private readonly UnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CsvReader (UnitOfWork unitOfWork)
+        public CsvReader (IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -22,7 +22,7 @@ namespace UKSSDC.Services.Import
             return null; //Placeholder
         }
 
-        List<PostCodeRecord> IPostCodeReader.Read(string filePath, int progress)
+        List<PostcodeRecord> IPostcodeReader.Read(string filePath, int progress)
         {
             return null; //Placeholder
         }
@@ -47,7 +47,7 @@ namespace UKSSDC.Services.Import
             throw new NotImplementedException();
         }
 
-        int IPostCodeReader.TotalRecords(string filePath)
+        int IPostcodeReader.TotalRecords(string filePath)
         {
             throw new NotImplementedException();
         }
@@ -62,7 +62,7 @@ namespace UKSSDC.Services.Import
     {
     }
 
-    public class PostCodeRecord
+    public class PostcodeRecord
     {
     }
 

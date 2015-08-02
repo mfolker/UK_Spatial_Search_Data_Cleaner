@@ -7,7 +7,7 @@ using System.Data.Entity.Spatial;
 
 namespace UKSSDC.Models
 {
-    public class PostCodePerimeter : Common
+    public class PostcodePerimeter : Common
     {
         public string OutwardCode { get; private set; }
 

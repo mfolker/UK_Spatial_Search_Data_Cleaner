@@ -22,32 +22,17 @@ namespace UKSSDC.Services.Import
 
         public List<ImportProgress> Report(RecordType recordType)
         {
-            switch (recordType)
-            {
-                    case RecordType.Place:
-                    //TODO: Read database for places imports and return all incomplete.
-                    break;
+            List<ImportProgress> report = new List<ImportProgress>();
 
-                    case RecordType.Postcode:
-                    //TODO: Read database for postcode imports and return all incomplete.
-                    break;
+            report = _unitOfWork.ImportProgress.Where(x => x.Complete == false && x.RecordType == recordType).ToList();
 
-                    case RecordType.Region:
-                    //TODO: Read database for region imports and return all incomplete.
-                    break;
-
-                    case RecordType.Road:
-                    //TODO: Read database for road imports and return all incomplete.
-                    break;
-            }
-            
-            throw new NotImplementedException();
+            return report; 
         }
 
 
         public bool Initialise(string path)
         {
-            if (path == null) //TODO: Take the path that the program is operating from.
+            if (path == "") //TODO: Take the path that the program is operating from or C:\\Places_CSV
             {
                 path =
                     "C:\\Users\\Matthew\\Desktop\\Project\\Implementation\\Maps Data\\UK_Spatial_Search_Data_Cleaner\\UKSSDC\\UKSSDC\\CSV";
@@ -93,8 +78,7 @@ namespace UKSSDC.Services.Import
             return true;
         }
 
-        //TODO: Review use of Async - refactoring required to use.
-        //To anybody reading this. I'm mostly using async here because I can, when I find a way of writing all records at once, it might be more appropriate. 
+        
         private void AddRecord(string directory, RecordType type)
         {
             string[] files = Directory.GetFiles(directory, "*.*", SearchOption.AllDirectories);

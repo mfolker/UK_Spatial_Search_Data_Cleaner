@@ -1,25 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UKSSDC.Models;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using System.Data.Entity.Spatial;
 using System.Data.Entity.Validation;
 using UKSSDC.Migrations;
-
+using UKSSDC.Models;
+using log4net;
 
 namespace UKSSDC.Services.Data
 {
     public class UnitOfWork : DbContext, IUnitOfWork
     {
+        private static readonly ILog Logger = LogManager.GetLogger(typeof (UnitOfWork)); 
+
         public DbSet<Place> Places { get; set; }
 
-        public DbSet<PostCode> PostCodes { get; set; }
+        public DbSet<Postcode> Postcodes { get; set; } 
 
-        public DbSet<PostCodePerimeter> PostCodePerimeters { get; set; } //TODO: Remove Camelcase, untidy! 
+        public DbSet<PostcodePerimeter> PostcodePerimeters { get; set; } //TODO: Remove Camelcase, untidy! 
 
         public DbSet<Region> Regions { get; set; }
 
@@ -62,16 +59,15 @@ namespace UKSSDC.Services.Data
 
         private void HandleError(Exception ex)
         {
-            //TODO: Add exception handling for failed database writes
+            log4net.Config.XmlConfigurator.Configure();
 
             if (ex is DbEntityValidationException)
             {
-
-                //throw new NotImplementedException();
+                Logger.Info(ex);
             }
             else if (ex is DbUpdateException)
             {
-                throw new NotImplementedException();
+                Logger.Warn(ex);
             }
             else
             {

@@ -41,6 +41,10 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\UKSSDC\Libs\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Shouldly">
       <HintPath>..\packages\Shouldly.2.5.0\lib\net40\Shouldly.dll</HintPath>
     </Reference>
@@ -61,13 +65,14 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="EastNorthingTests.cs" />
-    <Compile Include="PostCodeBoundingTests.cs" />
+    <Compile Include="EastingNorthingTests.cs" />
     <Compile Include="NameCleaningTests.cs" />
     <Compile Include="SearchTests.cs" />
     <Compile Include="Services\Data\UnitOfWorkTests.cs" />
     <Compile Include="Services\Import\CsvReaderTests.cs" />
     <Compile Include="Services\Import\ProgressReporterTests.cs" />
+    <Compile Include="PlacesTests.cs" />
+    <Compile Include="LoggingTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UKSSDC\UKSSDC.csproj">

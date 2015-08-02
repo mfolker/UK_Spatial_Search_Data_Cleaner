@@ -6,10 +6,6 @@ namespace UKSSDC.Tests
     [TestClass]
     public class SearchTests //Class may be excluded or moved in re-factoring.
     {
-        [TestMethod]
-        public void TestMethod1()
-        {
-
-        }
+        
     }
 }
