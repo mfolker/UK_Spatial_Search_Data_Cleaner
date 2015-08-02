@@ -6,7 +6,6 @@ using UKSSDC.Models;
 using UKSSDC.Models.Enums;
 using UKSSDC.Services.Data;
 
-
 namespace UKSSDC.Services.Import
 {
     public class ProgressReporter : IProgressReporter
@@ -14,10 +13,12 @@ namespace UKSSDC.Services.Import
         private string[] _directories; 
 
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ICsvReader _csvReader;
 
-        public ProgressReporter(IUnitOfWork unitOfWork)
+        public ProgressReporter(IUnitOfWork unitOfWork, ICsvReader csvReader)
         {
             _unitOfWork = unitOfWork;
+            _csvReader = csvReader;
         }
 
         public List<ImportProgress> Report(RecordType recordType)

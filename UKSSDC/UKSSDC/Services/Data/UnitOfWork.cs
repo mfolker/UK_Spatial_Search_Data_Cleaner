@@ -2,9 +2,10 @@
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
+using log4net;
+using log4net.Config;
 using UKSSDC.Migrations;
 using UKSSDC.Models;
-using log4net;
 
 namespace UKSSDC.Services.Data
 {
@@ -59,7 +60,7 @@ namespace UKSSDC.Services.Data
 
         private void HandleError(Exception ex)
         {
-            log4net.Config.XmlConfigurator.Configure(); //TODO: Check implementation
+            XmlConfigurator.Configure(); //TODO: Check implementation
 
             if (ex is DbEntityValidationException)
             {

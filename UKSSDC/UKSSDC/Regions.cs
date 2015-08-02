@@ -1,4 +1,6 @@
-﻿namespace UKSSDC
+﻿using System;
+
+namespace UKSSDC
 {
     public class Regions : IRecord
     {
@@ -9,7 +11,7 @@
 
         public bool Run()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

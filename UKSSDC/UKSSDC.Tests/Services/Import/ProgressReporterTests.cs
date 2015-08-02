@@ -1,6 +1,4 @@
-﻿using System;
-using System.Data.Entity.Core.Metadata.Edm;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shouldly;
 using UKSSDC.Models.Enums;
@@ -17,12 +15,12 @@ namespace UKSSDC.Tests.Services.Import
         public void ReportTest()
         {
             var uow = new UnitOfWork();
-
+            var csvReader = new CsvReader(new UnitOfWork());
             uow.Database.ExecuteSqlCommand("DELETE FROM ImportProgresses");
 
             InitialiseTest();
 
-            IProgressReporter reporter = new ProgressReporter(uow);
+            IProgressReporter reporter = new ProgressReporter(uow, csvReader);
 
             var reports = reporter.Report(RecordType.Place);
 
@@ -42,11 +40,12 @@ namespace UKSSDC.Tests.Services.Import
             int regions = 4;
             int roads = 3;
 
+            //TODO: Tidy up this mocking.
             var uow = new UnitOfWork();
-
+            var csvReader = new CsvReader(new UnitOfWork());
             // Act
 
-            IProgressReporter reporter = new ProgressReporter(uow);
+            IProgressReporter reporter = new ProgressReporter(uow, csvReader);
 
             bool result = reporter.Initialise(""); 
 
@@ -63,13 +62,14 @@ namespace UKSSDC.Tests.Services.Import
         {
             //Arrange (Mock Dependencies)
             var uow = new UnitOfWork();
+            var csvReader = new CsvReader(new UnitOfWork());
             string TestPath = "C:\\Users\\Matthew\\Desktop\\Project\\Implementation\\Maps Data\\UK_Spatial_Search_Data_Cleaner\\UKSSDC\\UKSSDC\\CSV\\Places";
 
             uow.Database.ExecuteSqlCommand("DELETE FROM ImportProgresses");
 
             // Act
             //ProgressReporter reporter = new ProgressReporter(uow);
-            ProgressReporter progressReporter = new ProgressReporter(uow);
+            ProgressReporter progressReporter = new ProgressReporter(uow, csvReader);
             PrivateObject reporter = new PrivateObject(progressReporter);
 
             //PrivateObject reporter = new PrivateObject(typeof(ProgressReporter(uow)));

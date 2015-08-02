@@ -8,8 +8,10 @@ namespace UKSSDC.Models
 
         public string FileName { get; set; }
 
-        //Record number holds the number of thelast record that was processed. 
-        public int RecordNumber { get; private set; } //TODO: Change the name of this record to be more suggestive of thefunctionality
+        //Record number holds the number of the last record that was processed. 
+        public int ProcessedRecords { get; private set; }
+
+        public int TotalRecords { get; set; }
 
         public bool Complete { get; private set; }
 
@@ -20,7 +22,8 @@ namespace UKSSDC.Models
                 RecordType = type,
                 FileName = filename,
                 Complete = false,
-                RecordNumber = 0
+                ProcessedRecords = 0,
+                TotalRecords = 0
             };
         }
     }

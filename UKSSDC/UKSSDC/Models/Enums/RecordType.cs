@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace UKSSDC.Models.Enums
+﻿namespace UKSSDC.Models.Enums
 {
     public enum RecordType
     {

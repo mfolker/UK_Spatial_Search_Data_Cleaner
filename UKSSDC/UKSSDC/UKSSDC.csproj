@@ -61,6 +61,10 @@
     <Compile Include="Migrations\201508021150208_Initial.Designer.cs">
       <DependentUpon>201508021150208_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201508022311102_AddTotalRecordsToImportProgress.cs" />
+    <Compile Include="Migrations\201508022311102_AddTotalRecordsToImportProgress.Designer.cs">
+      <DependentUpon>201508022311102_AddTotalRecordsToImportProgress.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="App_Start\IDependency.cs" />
     <Compile Include="Services\Data\IUnitOfWork.cs" />
@@ -110,6 +114,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201508021150208_Initial.resx">
       <DependentUpon>201508021150208_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508022311102_AddTotalRecordsToImportProgress.resx">
+      <DependentUpon>201508022311102_AddTotalRecordsToImportProgress.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

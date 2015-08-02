@@ -3,7 +3,7 @@
 namespace UKSSDC.Tests
 {
     [TestClass]
-    public class NameCleaningTests
+    public class EastingNorthingTests
     {
 
     }

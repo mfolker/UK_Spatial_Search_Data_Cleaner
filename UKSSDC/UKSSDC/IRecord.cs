@@ -3,6 +3,5 @@
     public interface IRecord 
     {
         bool Run();
-
     }
 }

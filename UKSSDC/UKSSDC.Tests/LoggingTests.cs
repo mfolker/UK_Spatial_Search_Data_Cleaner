@@ -1,6 +1,6 @@
-﻿using System;
+﻿using log4net;
+using log4net.Config;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using log4net; 
 
 namespace UKSSDC.Tests
 {
@@ -13,7 +13,7 @@ namespace UKSSDC.Tests
         [TestMethod]
         public void TestMethod1()
         {
-            log4net.Config.XmlConfigurator.Configure();
+            XmlConfigurator.Configure();
             Logger.Debug("Unit Test Message");    
             //TODO: Add assert.
         }

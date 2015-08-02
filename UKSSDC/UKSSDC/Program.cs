@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Autofac;
+using log4net;
 using UKSSDC.Services.Data;
 using UKSSDC.Services.Import;
-using log4net;
-
 
 //TODO: Consider restructuring so that each record can handled and recorded as successful or not.
 

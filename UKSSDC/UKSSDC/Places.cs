@@ -1,9 +1,8 @@
 using System;
-using System.Data.Entity.Migrations.Model;
 using UKSSDC.Models;
-using UKSSDC.Services.Import;
 using UKSSDC.Models.Enums;
 using UKSSDC.Services.Data;
+using UKSSDC.Services.Import;
 
 namespace UKSSDC
 {
@@ -51,7 +50,7 @@ namespace UKSSDC
         {
             //Look at where the last import got to.
 
-            var chunk = _placeReader.Read(inCompleteFile.FileName, inCompleteFile.RecordNumber); 
+            var chunk = _placeReader.Read(inCompleteFile.FileName, inCompleteFile.ProcessedRecords); 
 
             //Take 2.5k from that point onwards or however many are left.
 
