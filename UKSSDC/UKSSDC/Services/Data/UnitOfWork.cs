@@ -16,7 +16,7 @@ namespace UKSSDC.Services.Data
 
         public DbSet<Postcode> Postcodes { get; set; } 
 
-        public DbSet<PostcodePerimeter> PostcodePerimeters { get; set; } //TODO: Remove Camelcase, untidy! 
+        public DbSet<PostcodePerimeter> PostcodePerimeters { get; set; } 
 
         public DbSet<Region> Regions { get; set; }
 
@@ -59,7 +59,7 @@ namespace UKSSDC.Services.Data
 
         private void HandleError(Exception ex)
         {
-            log4net.Config.XmlConfigurator.Configure();
+            log4net.Config.XmlConfigurator.Configure(); //TODO: Check implementation
 
             if (ex is DbEntityValidationException)
             {

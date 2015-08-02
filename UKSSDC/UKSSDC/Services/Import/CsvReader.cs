@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UKSSDC.Models.Enums;
 using UKSSDC.Services.Data;
 
 namespace UKSSDC.Services.Import
 {
-    public class CsvReader : IPlaceReader, IPostcodeReader, IRegionReader, IRoadReader
+    public class CsvReader : ICsvReader
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -16,45 +18,65 @@ namespace UKSSDC.Services.Import
             _unitOfWork = unitOfWork;
         }
 
-        List<PlaceRecord> IPlaceReader.Read (string filePath, int progress)
+        public static String getFileLines(String path, int indexOfLine)
         {
+            return File.ReadLines(path).ElementAtOrDefault(indexOfLine);
+        }
+
+        List<PlaceRecord> ICsvReader.Read (string filePath, int progress)
+        {
+
+            var PlacesRecords = getFileLines(filePath, progress); 
+
+
 
             return null; //Placeholder
         }
 
-        List<PostcodeRecord> IPostcodeReader.Read(string filePath, int progress)
-        {
-            return null; //Placeholder
-        }
+        //List<PostcodeRecord> IPostcodeReader.Read(string filePath, int progress)
+        //{
+        //    return null; //Placeholder
+        //}
 
-        List<RegionRecord> IRegionReader.Read(string filePath, int progress)
-        {
-            return null; //Placeholder
-        }
+        //List<RegionRecord> IRegionReader.Read(string filePath, int progress)
+        //{
+        //    return null; //Placeholder
+        //}
 
-        List<RoadRecord> IRoadReader.Read(string filePath, int progress)
-        {
-            return null; //Placeholder
-        }
+        //List<RoadRecord> IRoadReader.Read(string filePath, int progress)
+        //{
+        //    return null; //Placeholder
+        //}
 
-        int IRoadReader.TotalRecords(string filePath)
-        {
-            throw new NotImplementedException();
-        }
+        //int IRoadReader.TotalRecords(string filePath)
+        //{
+        //    //Roads have one line at the top.
 
-        int IRegionReader.TotalRecords(string filePath)
-        {
-            throw new NotImplementedException();
-        }
+        //    int total = System.IO.File.ReadAllLines(filePath).Length;
 
-        int IPostcodeReader.TotalRecords(string filePath)
-        {
-            throw new NotImplementedException();
-        }
+        //    return total--; 
+        //}
 
-        int IPlaceReader.TotalRecords(string filePath)
+        //int IRegionReader.TotalRecords(string filePath)
+        //{
+        //    //Regions have 1 line at the top.
+
+        //    int total = System.IO.File.ReadAllLines(filePath).Length;
+
+        //    return total--; 
+        //}
+
+        //int IPostcodeReader.TotalRecords(string filePath)
+        //{
+        //    return System.IO.File.ReadAllLines(filePath).Length;
+        //}
+
+        int ICsvReader.TotalRecords(string filePath, RecordType type)
         {
-            throw new NotImplementedException();
+            //Places have 1 line at the top
+            int total = System.IO.File.ReadAllLines(filePath).Length;
+            
+            return type == RecordType.Postcode ? total : total--;
         }
     }
 

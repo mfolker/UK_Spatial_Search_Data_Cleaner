@@ -10,13 +10,13 @@ namespace UKSSDC
     public class Places : IRecord
     {
 
-        private IPlaceReader _placeReader;
+        private ICsvReader _placeReader;
         private IProgressReporter _progressReporter;
         private IUnitOfWork _unitOfWork;
-
+        
         private bool success; 
 
-        public Places(IPlaceReader placeReader, IProgressReporter progressReporter, IUnitOfWork unitOfWork)
+        public Places(ICsvReader placeReader, IProgressReporter progressReporter, IUnitOfWork unitOfWork)
         {
             _progressReporter = progressReporter;
             _placeReader = placeReader;
@@ -50,6 +50,8 @@ namespace UKSSDC
         private bool Import(ImportProgress inCompleteFile)
         {
             //Look at where the last import got to.
+
+            var chunk = _placeReader.Read(inCompleteFile.FileName, inCompleteFile.RecordNumber); 
 
             //Take 2.5k from that point onwards or however many are left.
 

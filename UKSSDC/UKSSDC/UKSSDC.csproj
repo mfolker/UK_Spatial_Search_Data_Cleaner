@@ -85,10 +85,7 @@
     <Compile Include="Roads.cs" />
     <Compile Include="Services\Data\UnitOfWork.cs" />
     <Compile Include="Services\Import\CsvReader.cs" />
-    <Compile Include="Services\Import\IPlaceReader.cs" />
-    <Compile Include="Services\Import\IPostcodeReader.cs" />
-    <Compile Include="Services\Import\IRegionReader.cs" />
-    <Compile Include="Services\Import\IRoadReader.cs" />
+    <Compile Include="Services\Import\ICsvReader.cs" />
     <Compile Include="Services\Import\ProgressReporter.cs" />
   </ItemGroup>
   <ItemGroup>

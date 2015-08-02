@@ -84,9 +84,14 @@ namespace UKSSDC.Services.Import
             string[] files = Directory.GetFiles(directory, "*.*", SearchOption.AllDirectories);
 
             // ReSharper disable once SuggestVarOrType_Elsewhere
-            List<ImportProgress> preStore = files.Where(file => !file.Contains(".csvt")).Select(file => ImportProgress.Create(file, type)).ToList();
+            List<ImportProgress> records = files.Where(file => !file.Contains(".csvt")).Select(file => ImportProgress.Create(file, type)).ToList();
 
-            _unitOfWork.ImportProgress.AddRange(preStore.AsEnumerable()); 
+            foreach (var record in records)
+            {
+                
+            }
+
+            _unitOfWork.ImportProgress.AddRange(records.AsEnumerable()); 
 
             _unitOfWork.Save();
         }
