@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using log4net.Repository.Hierarchy;
 using UKSSDC.Models;
 using UKSSDC.Models.Enums;
 using UKSSDC.Services.Data;
@@ -47,7 +48,7 @@ namespace UKSSDC.Services.Import
             {
                 //TODO: Handle and log correctly. 
                 Console.WriteLine("Sorry, directory path isn't valid");
-                Console.WriteLine("Exception thrown");
+                Console.WriteLine(ex);
                 return false;
             }
             

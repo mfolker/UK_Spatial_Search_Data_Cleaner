@@ -2,7 +2,7 @@
 
 namespace UKSSDC
 {
-    public class Postcodes : IRecord
+    public class Postcodes : RecordsCommon, IRecord
     {
         public static bool CheckComplete()
         {

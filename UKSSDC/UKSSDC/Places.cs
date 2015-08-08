@@ -1,28 +1,24 @@
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Spatial;
-using System.Data.Entity.Validation;
 using System.IO;
 using System.Linq;
-using System.Runtime.Remoting.Channels;
+using log4net;
+using log4net.Config;
 using UKSSDC.Models;
 using UKSSDC.Models.Enums;
 using UKSSDC.Services.Data;
 using UKSSDC.Services.Import;
-using log4net;
-using log4net.Config;
 
 namespace UKSSDC
 {
-    public class Places : IRecord
+    public class Places : RecordsCommon, IRecord
     {
         private static readonly ILog Logger = LogManager.GetLogger(typeof(UnitOfWork)); 
 
         private readonly ICsvReader _csvReader;
         private readonly IProgressReporter _progressReporter;
-        private IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
         
 
         public Places(ICsvReader placeReader, IProgressReporter progressReporter, IUnitOfWork unitOfWork)
@@ -122,38 +118,5 @@ namespace UKSSDC
             int records = _unitOfWork.Places.Count(x => x.Country == country);
             return ((records/inCompleteFile.TotalRecords)*100);
         }
-
-        //TODO: Add to common records class? 
-        private string[] SplitCsvLine(string csvLine)
-        {
-            string[] attributes = csvLine.Split(',');
-            attributes[0] = StripEscapeCharacters(attributes[0]); 
-            return attributes; 
-        }
-
-        private Country determineCountry(string filePath)
-        {
-            string fileName = Path.GetFileNameWithoutExtension(filePath);
-
-            if (fileName.Contains("England"))
-            {
-                return Country.England;
-            }
-            else if (fileName.Contains("Scotland"))
-            {
-                return Country.Scotland;
-            }
-            else
-            {
-                return Country.Wales;
-            }
-        }
-
-        private string StripEscapeCharacters(string wktEscaped)
-        {
-            string result = wktEscaped.Replace("\"", "");
-            return result;
-        }
-
     }
 }

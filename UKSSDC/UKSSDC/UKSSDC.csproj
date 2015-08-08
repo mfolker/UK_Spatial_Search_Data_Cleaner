@@ -79,6 +79,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="App_Start\IDependency.cs" />
+    <Compile Include="RecordsCommon.cs" />
     <Compile Include="Services\Data\IUnitOfWork.cs" />
     <Compile Include="Services\Import\IProgressReporter.cs" />
     <Compile Include="Models\Common.cs" />
