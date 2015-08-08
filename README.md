@@ -5,7 +5,7 @@ This software was implemented to clean and organise spatial data for the United 
 The data that has been processed can be found here: 
 
 https://www.ordnancesurvey.co.uk/opendatadownload/products.html
-The 'places' have been processed, I cannot find again and therefore I have included them with the project as an example. 
+http://download.geofabrik.de/europe/great-britain.html
 
 I have published this software here because it contains:
 
@@ -15,3 +15,5 @@ I have published this software here because it contains:
 - A couple of classes that you can use in other projects for example a simple CSV reader
 
 I hope this is of some use to someone. Please feel free to message me at matthew.folker@gmail.com if you have any questions. 
+
+If you would like to work on another project with this data, myself and a colleague have one in mind. Again, please feel free to get in contact. 
