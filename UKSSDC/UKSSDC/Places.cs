@@ -6,6 +6,7 @@ using System.Data.Entity.Spatial;
 using System.Data.Entity.Validation;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Channels;
 using UKSSDC.Models;
 using UKSSDC.Models.Enums;
 using UKSSDC.Services.Data;
@@ -88,7 +89,8 @@ namespace UKSSDC
                             Country = country,
                             Location = DbGeography.PointFromText(x[0], 4326),
                             OsmId = Int64.Parse(x[1]),
-                            Name = x[2]
+                            Name = x[2],
+                            Created = DateTime.UtcNow
                         };
 
                         places.Add(place);
@@ -96,7 +98,11 @@ namespace UKSSDC
                     }
                     catch (Exception ex)
                     {
-                        //TODO: LOGGING AND CONSOLE OUTPUT 
+                        Console.WriteLine("The following record could not be added as a place:");
+                        Console.WriteLine(ex);
+                        Console.WriteLine(rawRecord);
+                        Logger.Error(rawRecord);
+                        Logger.Error("The following record could not be added as a place. The exceptin produced is logged below.");
                         inCompleteFile.ProcessedRecords++;
                     }
                 }

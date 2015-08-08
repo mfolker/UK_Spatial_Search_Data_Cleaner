@@ -56,27 +56,30 @@ namespace UKSSDC
 
                 reporter.Initialise(directory); 
 
+                //Places
                 var places = scope.Resolve<Places>();
-
                 bool placesComplete = places.Run();
 
-                var postcodes = scope.Resolve<Postcodes>();
+                //Postcodes
+                //var postcodes = scope.Resolve<Postcodes>();
+                //bool postcodesComplete = postcodes.Run();
 
-                bool postcodesComplete = postcodes.Run();
+                //if (postcodesComplete)
+                //{
+                //    var postcodeperimeter = scope.Resolve<PostcodePerimeters>();
+                //    bool postcodeperimieterComplete = postcodeperimeter.Run();
+                //}
+                //else
+                //{
+                //    Console.WriteLine("Post code perimeters could not be built as the postcode import did not succeed.");
+                //}
 
-                if (postcodesComplete)
-                {
-                    var postcodeperimeter = scope.Resolve<PostcodePerimeters>();
-
-                    bool postcodeperimieterComplete = postcodeperimeter.Run();
-                }
-
+                //Regions
                 var regions = scope.Resolve<Regions>();
+                //bool regionsComplete = regions.Run();
 
-                bool regionsComplete = regions.Run();
-
+                //Roads
                 var roads = scope.Resolve<Roads>();
-
                 bool roadsComplete = roads.Run();
 
                 //TODO: Success messages for each?

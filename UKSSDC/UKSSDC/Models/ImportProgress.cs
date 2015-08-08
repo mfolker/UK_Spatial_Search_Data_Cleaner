@@ -1,4 +1,5 @@
-﻿using UKSSDC.Models.Enums;
+﻿using System;
+using UKSSDC.Models.Enums;
 
 namespace UKSSDC.Models
 {
@@ -23,7 +24,8 @@ namespace UKSSDC.Models
                 FileName = filename,
                 Complete = false,
                 ProcessedRecords = 0,
-                TotalRecords = 0
+                TotalRecords = 0,
+                Created = DateTime.UtcNow
             };
         }
     }

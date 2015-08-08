@@ -4,10 +4,10 @@ namespace UKSSDC.Models
 {
     public abstract class Common
     {
-        public int Id { get; private set; }
+        public int Id { get; set; }
 
-        public DateTime Created { get; private set; }
+        public DateTime Created { get; set; }
 
-        public DateTime Updated { get; private set; }
+        public DateTime Updated { get; set; }
     }
 }

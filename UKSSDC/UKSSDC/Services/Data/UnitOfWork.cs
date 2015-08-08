@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using log4net;
@@ -56,6 +57,22 @@ namespace UKSSDC.Services.Data
             {
                 HandleError(ex);
             }
+        }
+
+        public override int SaveChanges()
+        {
+            DateTime now = DateTime.UtcNow;
+            foreach (ObjectStateEntry entry in (this as IObjectContextAdapter).ObjectContext.ObjectStateManager.GetObjectStateEntries(EntityState.Added | EntityState.Modified))
+            {
+                if (!entry.IsRelationship)
+                {
+                    Common updated = entry.Entity as Common;
+                    if (updated != null)
+                        updated.Updated = now;
+                }
+            }
+
+            return base.SaveChanges();
         }
 
         private void HandleError(Exception ex)
