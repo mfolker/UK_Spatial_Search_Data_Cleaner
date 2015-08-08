@@ -9,7 +9,7 @@ namespace UKSSDC.Models
 
         public DbGeography Path { get; private set; } //WKT
 
-        public int OsmId { get; private set; }
+        public long OsmId { get; private set; }
 
         public string ReferenceNumber { get; private set; }
 

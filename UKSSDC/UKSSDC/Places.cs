@@ -1,72 +1,152 @@
 using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Spatial;
+using System.Data.Entity.Validation;
+using System.IO;
+using System.Linq;
 using UKSSDC.Models;
 using UKSSDC.Models.Enums;
 using UKSSDC.Services.Data;
 using UKSSDC.Services.Import;
+using log4net;
+using log4net.Config;
 
 namespace UKSSDC
 {
     public class Places : IRecord
     {
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(UnitOfWork)); 
 
-        private ICsvReader _placeReader;
-        private IProgressReporter _progressReporter;
+        private readonly ICsvReader _csvReader;
+        private readonly IProgressReporter _progressReporter;
         private IUnitOfWork _unitOfWork;
         
-        private bool success; 
 
         public Places(ICsvReader placeReader, IProgressReporter progressReporter, IUnitOfWork unitOfWork)
         {
+            XmlConfigurator.Configure();
+
             _progressReporter = progressReporter;
-            _placeReader = placeReader;
+            _csvReader = placeReader;
             _unitOfWork = unitOfWork;
         }
 
         public bool Run()
         {
+            bool success = true; 
+
             var inCompleteFiles = _progressReporter.Report(RecordType.Place);
 
             if (inCompleteFiles == null)
                 return true;
-            
+
             foreach (ImportProgress inCompleteFile in inCompleteFiles)
             {
                 string fileName = inCompleteFile.FileName; 
-                bool importSuccess = Import(inCompleteFile);
-                if (!importSuccess)
+                int importSuccess = Import(inCompleteFile);
+                if (importSuccess != 100)
                 {
-                    //TODO: Add error logging to file. 
+                    success = false;
+                    string formatLog = string.Format("The following file was not correctly stored: {0}", fileName); 
+                    Logger.Fatal(formatLog);
                     Console.WriteLine("Problems encountered importing the following file:");
                     Console.WriteLine(fileName);
+                    Console.WriteLine("This file is only {0}% complete", importSuccess);
                 }
             }
 
-            if (success)
-                return true;
-            return false;
+            return success;
         }
 
-        private bool Import(ImportProgress inCompleteFile)
+        private int Import(ImportProgress inCompleteFile)
         {
-            //Look at where the last import got to.
+            string unknownCountry = inCompleteFile.FileName;
 
-            var chunk = _placeReader.Read(inCompleteFile.FileName, inCompleteFile.ProcessedRecords); 
+            Country country = determineCountry(unknownCountry);
 
-            //Take 2.5k from that point onwards or however many are left.
+            while (inCompleteFile.ProcessedRecords < inCompleteFile.TotalRecords)
+            {
+                //TODO: Hook up the last parameter in the function that is invoked below so that a choice can be made about chunks to read. 
+                
+                if (inCompleteFile.ProcessedRecords == 0)
+                    inCompleteFile.ProcessedRecords++; //Plus one due to heading line in places csvs
+                
+                var rawRecords = _csvReader.Read(inCompleteFile.FileName, (inCompleteFile.ProcessedRecords), true);
+                
+                List<Place> places = new List<Place>();
 
-            //Loop through each set of 2.5k and create new Places records (try and log exceptions)
+                foreach (var rawRecord in rawRecords)
+                {
+                    Console.WriteLine("Processing Record: {0}", rawRecord);
+                    string[] x = SplitCsvLine(rawRecord);
+                    try
+                    {
+                        Place place = new Place
+                        {
+                            Country = country,
+                            Location = DbGeography.PointFromText(x[0], 4326),
+                            OsmId = Int64.Parse(x[1]),
+                            Name = x[2]
+                        };
 
-            //Save all to database. 
+                        places.Add(place);
+                        inCompleteFile.ProcessedRecords++; 
+                    }
+                    catch (Exception ex)
+                    {
+                        //TODO: LOGGING AND CONSOLE OUTPUT 
+                        inCompleteFile.ProcessedRecords++;
+                    }
+                }
 
-            //Catch any exceptions when writing to the database. Skip record, log & write to console, then carry on. 
+                _unitOfWork.Places.AddRange(places.AsEnumerable());
+                _unitOfWork.ImportProgress.Add(inCompleteFile);
+                _unitOfWork.Save();
+            }
 
-            //if any records where dropped, return message to say how many. 
+            if (inCompleteFile.ProcessedRecords == inCompleteFile.TotalRecords)
+            {
+                inCompleteFile.Complete = true;
+                _unitOfWork.ImportProgress.Add(inCompleteFile);
+                _unitOfWork.Save();
+            }
 
-            //or return true. 
+            int records = _unitOfWork.Places.Count(x => x.Country == country);
+            return ((records/inCompleteFile.TotalRecords)*100);
+        }
 
-            //update how many records (recordNumber) have been completed. 
+        //TODO: Add to common records class? 
+        private string[] SplitCsvLine(string csvLine)
+        {
+            string[] attributes = csvLine.Split(',');
+            attributes[0] = StripEscapeCharacters(attributes[0]); 
+            return attributes; 
+        }
 
-            throw new NotImplementedException(); 
+        private Country determineCountry(string filePath)
+        {
+            string fileName = Path.GetFileNameWithoutExtension(filePath);
+
+            if (fileName.Contains("England"))
+            {
+                return Country.England;
+            }
+            else if (fileName.Contains("Scotland"))
+            {
+                return Country.Scotland;
+            }
+            else
+            {
+                return Country.Wales;
+            }
+        }
+
+        private string StripEscapeCharacters(string wktEscaped)
+        {
+            string result = wktEscaped.Replace("\"", "");
+            return result;
         }
 
     }

@@ -16,14 +16,15 @@ namespace UKSSDC.Services.Import
             _unitOfWork = unitOfWork;
         }
 
-        public static String getFileLines(String path, int indexOfLine)
+        public IList<string> Read(string filePath, int progress, bool readPart = false)
         {
-            return File.ReadLines(path).ElementAtOrDefault(indexOfLine);
-        }
+            if (readPart)
+            {
+                IEnumerable<int> range = Enumerable.Range(progress, 2500);
+                return File.ReadLines(filePath).Where((l, i) => range.Contains(i)).ToList();
+            }
 
-        public IEnumerable<object> Read(string filePath, int progress)
-        {
-            throw new NotImplementedException();
+            return File.ReadAllLines(filePath).Skip(progress).ToList();
         }
 
         public int TotalRecords(string filePath, RecordType type)

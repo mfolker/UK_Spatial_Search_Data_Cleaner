@@ -9,8 +9,8 @@ namespace UKSSDC.Models
 
         public DbGeography Location { get; set; } //WKT
 
-        public int OsmId { get; set; }
+        public long OsmId { get; set; }
 
-        public Country Country { get; private set; }
+        public Country Country { get; set; }
     }
 }

@@ -89,7 +89,7 @@ namespace UKSSDC.Services.Import
 
             foreach (var record in records)
             {
-                
+                record.TotalRecords = _csvReader.TotalRecords(record.FileName, type);
             }
 
             _unitOfWork.ImportProgress.AddRange(records.AsEnumerable()); 

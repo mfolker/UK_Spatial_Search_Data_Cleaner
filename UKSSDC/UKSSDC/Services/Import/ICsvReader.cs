@@ -5,7 +5,7 @@ namespace UKSSDC.Services.Import
 {
     public interface ICsvReader : IDependency
     {
-        IEnumerable<object> Read(string filePath, int progress);
+        IList<string> Read(string filePath, int progress, bool readAll);
 
         int TotalRecords(string filePath, RecordType type);
     }

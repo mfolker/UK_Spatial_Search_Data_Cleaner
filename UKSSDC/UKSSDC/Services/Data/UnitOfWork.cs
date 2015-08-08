@@ -60,7 +60,7 @@ namespace UKSSDC.Services.Data
 
         private void HandleError(Exception ex)
         {
-            XmlConfigurator.Configure(); //TODO: Check implementation
+            XmlConfigurator.Configure(); 
 
             if (ex is DbEntityValidationException)
             {
@@ -103,21 +103,73 @@ namespace UKSSDC.Services.Data
 
             #region Place
 
+            modelBuilder.Entity<Place>()
+                .Property(p => p.Created)
+                .IsRequired()
+                .HasColumnType("datetime2");
+
+            modelBuilder.Entity<Place>()
+                .Property(p => p.Updated)
+                .IsRequired()
+                .HasColumnType("datetime2");
+
             #endregion
 
+            //TODO: Determine which WKT's should be unique and apply constraint. 
+
             #region Postcode
+
+            modelBuilder.Entity<Postcode>()
+                .Property(p => p.Created)
+                .IsRequired()
+                .HasColumnType("datetime2");
+
+            modelBuilder.Entity<Postcode>()
+                .Property(p => p.Updated)
+                .IsRequired()
+                .HasColumnType("datetime2");
 
             #endregion
 
             #region PostcodePerimeter
 
+            modelBuilder.Entity<PostcodePerimeter>()
+                .Property(p => p.Created)
+                .IsRequired()
+                .HasColumnType("datetime2");
+
+            modelBuilder.Entity<PostcodePerimeter>()
+                .Property(p => p.Updated)
+                .IsRequired()
+                .HasColumnType("datetime2");
+
             #endregion
 
             #region Region
 
+            modelBuilder.Entity<Region>()
+                .Property(p => p.Created)
+                .IsRequired()
+                .HasColumnType("datetime2");
+
+            modelBuilder.Entity<Region>()
+                .Property(p => p.Updated)
+                .IsRequired()
+                .HasColumnType("datetime2");
+
             #endregion
 
             #region Roads
+
+            modelBuilder.Entity<Road>()
+                .Property(p => p.Created)
+                .IsRequired()
+                .HasColumnType("datetime2");
+
+            modelBuilder.Entity<Road>()
+                .Property(p => p.Updated)
+                .IsRequired()
+                .HasColumnType("datetime2");
 
             #endregion
         }

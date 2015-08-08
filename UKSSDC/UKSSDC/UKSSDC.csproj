@@ -65,6 +65,18 @@
     <Compile Include="Migrations\201508022311102_AddTotalRecordsToImportProgress.Designer.cs">
       <DependentUpon>201508022311102_AddTotalRecordsToImportProgress.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201508070947508_Adddatatime2torecords.cs" />
+    <Compile Include="Migrations\201508070947508_Adddatatime2torecords.Designer.cs">
+      <DependentUpon>201508070947508_Adddatatime2torecords.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508070952376_PlacesOSMIDLong.cs" />
+    <Compile Include="Migrations\201508070952376_PlacesOSMIDLong.Designer.cs">
+      <DependentUpon>201508070952376_PlacesOSMIDLong.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508070956363_RoadsOSMIDLong.cs" />
+    <Compile Include="Migrations\201508070956363_RoadsOSMIDLong.Designer.cs">
+      <DependentUpon>201508070956363_RoadsOSMIDLong.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="App_Start\IDependency.cs" />
     <Compile Include="Services\Data\IUnitOfWork.cs" />
@@ -99,17 +111,17 @@
     <None Include="CSV\Regions\Notes.md" />
     <None Include="Migrations\Notes.md" />
     <None Include="Models\Notes.md" />
+    <None Include="Notes.md" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CSV\Places\" />
     <Folder Include="CSV\PostCodes\" />
     <Folder Include="CSV\Roads\" />
-    <Folder Include="Services\EastingNorthings\" />
+    <Folder Include="Logs\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Libs\log4net.dll" />
-    <Content Include="Logs\UKSSDC.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201508021150208_Initial.resx">
@@ -117,6 +129,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201508022311102_AddTotalRecordsToImportProgress.resx">
       <DependentUpon>201508022311102_AddTotalRecordsToImportProgress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508070947508_Adddatatime2torecords.resx">
+      <DependentUpon>201508070947508_Adddatatime2torecords.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508070952376_PlacesOSMIDLong.resx">
+      <DependentUpon>201508070952376_PlacesOSMIDLong.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508070956363_RoadsOSMIDLong.resx">
+      <DependentUpon>201508070956363_RoadsOSMIDLong.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

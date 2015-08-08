@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shouldly;
 using UKSSDC.Models.Enums;
 using UKSSDC.Services.Data;
@@ -10,9 +11,23 @@ namespace UKSSDC.Tests.Services.Import
     public class CsvReaderTests
     {
         [TestMethod]
+        public void ReadPartTest()
+        {
+            string filePath =
+                "C:\\Users\\Matthew\\Desktop\\Project\\Implementation\\Maps Data\\UK_Spatial_Search_Data_Cleaner\\UKSSDC\\UKSSDC\\CSV\\Places\\PlacesWales.csv";
+
+            IUnitOfWork uow = new UnitOfWork();
+
+            CsvReader reader = new CsvReader(uow);
+
+            var result = reader.Read(filePath, 1, true);
+
+            //TODO: Add assert. 
+        }
+
         public void ReadTest()
         {
-            //AAA
+            //TODO: Write a test for reading the rest of the file. 
         }
 
         [TestMethod]

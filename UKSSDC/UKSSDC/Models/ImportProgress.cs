@@ -9,11 +9,11 @@ namespace UKSSDC.Models
         public string FileName { get; set; }
 
         //Record number holds the number of the last record that was processed. 
-        public int ProcessedRecords { get; private set; }
+        public int ProcessedRecords { get; set; }
 
         public int TotalRecords { get; set; }
 
-        public bool Complete { get; private set; }
+        public bool Complete { get; set; }
 
         public static ImportProgress Create(string filename, RecordType type) 
         {
