@@ -1,4 +1,6 @@
 ﻿using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 using UKSSDC.Models.Enums;
 
 namespace UKSSDC
@@ -12,9 +14,17 @@ namespace UKSSDC
 
         //TODO: Move run methods to here.
 
-        protected internal string[] SplitCsvLine(string csvLine)
+        //TODO: Modify breaks in files to |
+        protected internal string[] SplitCsvLineComma(string csvLine)
         {
             string[] attributes = csvLine.Split(',');
+            attributes[0] = StripEscapeCharacters(attributes[0]);
+            return attributes;
+        }
+
+        protected internal string[] SplitCsvLinePipe(string csvLine)
+        {
+            string[] attributes = csvLine.Split('|');
             attributes[0] = StripEscapeCharacters(attributes[0]);
             return attributes;
         }

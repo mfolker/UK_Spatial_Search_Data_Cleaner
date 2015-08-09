@@ -77,7 +77,7 @@ namespace UKSSDC
                 foreach (var rawRecord in rawRecords)
                 {
                     Console.WriteLine("Processing Record: {0}", rawRecord);
-                    string[] x = SplitCsvLine(rawRecord);
+                    string[] x = SplitCsvLineComma(rawRecord);
                     try
                     {
                         Place place = new Place

@@ -13,7 +13,7 @@ namespace UKSSDC.Tests
     public class RecordsCommonTests
     {
         [TestMethod]
-        public void SplitCsvLineTest()
+        public void SplitCsvLinePolygonTest()
         {
             RecordsCommon recordHandler = new RecordsCommon();
             PrivateObject hanlder = new PrivateObject(recordHandler);
@@ -23,6 +23,20 @@ namespace UKSSDC.Tests
             string[] result = (string[]) hanlder.Invoke("SplitCsvLine", param);
 
             result[0].ShouldBe("LINESTRING (-1.8212114 52.5538901,-1.8205573 52.554324)");
+            //result[1].ShouldBe("45");
+        }
+
+        [TestMethod]
+        public void SplitCsvLinePointTest()
+        {
+            RecordsCommon recordHandler = new RecordsCommon();
+            PrivateObject hanlder = new PrivateObject(recordHandler);
+
+            object[] param = { "\"POINT (-0.1276474 51.5073219)\", 107775, London, city, 8416535" };
+
+            string[] result = (string[])hanlder.Invoke("SplitCsvLine", param);
+
+            result[0].ShouldBe("POINT (-0.1276474 51.5073219)");
         }
     }
 }

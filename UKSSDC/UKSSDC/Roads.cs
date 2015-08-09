@@ -77,11 +77,13 @@ namespace UKSSDC
                     Console.WriteLine("Processing Record: {0}", rawRecord);
 
                     //TODO: HANDLE COMMA's in linestrings.
-                    string[] x = SplitCsvLine(rawRecord);
-
-
+                    string[] x = SplitCsvLinePipe(rawRecord);
                     try
                     {
+                        int MaxSpeed = 0;
+
+                        Int32.TryParse(x[8], out MaxSpeed);
+
                         Road road = new Road
                         {
                             Country = country,
@@ -90,7 +92,7 @@ namespace UKSSDC
                             Name = x[2],
                             ReferenceNumber = x[3],
                             Type = x[4],
-                            MaxSpeed = Int32.Parse(x[8]),
+                            MaxSpeed = MaxSpeed,
                             Created = DateTime.UtcNow
                         };
 
@@ -109,7 +111,7 @@ namespace UKSSDC
                 }
 
                 _unitOfWork.Roads.AddRange(roads.AsEnumerable());
-                _unitOfWork.ImportProgress.Add(inCompleteFile);
+                _unitOfWork.ImportProgress.Add(inCompleteFile). //.Add(inCompleteFile);
                 _unitOfWork.Save();
 
             }
