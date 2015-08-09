@@ -65,13 +65,12 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="EastingNorthingTests.cs" />
     <Compile Include="NameCleaningTests.cs" />
+    <Compile Include="RecordsCommonTests.cs" />
     <Compile Include="SearchTests.cs" />
     <Compile Include="Services\Data\UnitOfWorkTests.cs" />
     <Compile Include="Services\Import\CsvReaderTests.cs" />
     <Compile Include="Services\Import\ProgressReporterTests.cs" />
-    <Compile Include="PlacesTests.cs" />
     <Compile Include="LoggingTests.cs" />
   </ItemGroup>
   <ItemGroup>

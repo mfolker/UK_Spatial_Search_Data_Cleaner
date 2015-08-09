@@ -61,7 +61,7 @@ namespace UKSSDC
         {
             string unknownCountry = inCompleteFile.FileName;
 
-            Country country = determineCountry(unknownCountry);
+            Country country = DetermineCountry(unknownCountry);
 
             while (inCompleteFile.ProcessedRecords < inCompleteFile.TotalRecords)
             {
@@ -87,6 +87,7 @@ namespace UKSSDC
                             OsmId = Int64.Parse(x[1]),
                             Name = x[2],
                             Created = DateTime.UtcNow
+                            //TODO: Include type? 
                         };
 
                         places.Add(place);
@@ -97,8 +98,8 @@ namespace UKSSDC
                         Console.WriteLine("The following record could not be added as a place:");
                         Console.WriteLine(ex);
                         Console.WriteLine(rawRecord);
+                        Logger.Error("The following record could not be added as a place. The exception produced is logged below."); 
                         Logger.Error(rawRecord);
-                        Logger.Error("The following record could not be added as a place. The exceptin produced is logged below.");
                         inCompleteFile.ProcessedRecords++;
                     }
                 }

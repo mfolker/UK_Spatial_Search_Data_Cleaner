@@ -3,8 +3,8 @@
 namespace UKSSDC.Tests
 {
     [TestClass]
-    public class SearchTests //Class may be excluded or moved in re-factoring.
+    public class SearchTests 
     {
-        
+        //TODO: Add some geo-spatial search tests.
     }
 }

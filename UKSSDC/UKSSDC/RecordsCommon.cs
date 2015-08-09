@@ -10,6 +10,8 @@ namespace UKSSDC
             
         }
 
+        //TODO: Move run methods to here.
+
         protected internal string[] SplitCsvLine(string csvLine)
         {
             string[] attributes = csvLine.Split(',');
@@ -23,7 +25,7 @@ namespace UKSSDC
             return result;
         }
 
-        protected internal Country determineCountry(string filePath)
+        protected internal Country DetermineCountry(string filePath)
         {
             string fileName = Path.GetFileNameWithoutExtension(filePath);
 
