@@ -17,3 +17,6 @@ I have published this software here because it contains:
 I hope this is of some use to someone. Please feel free to message me at matthew.folker@gmail.com if you have any questions. 
 
 If you would like to work on another project with this data, myself and a colleague have one in mind. Again, please feel free to get in contact. 
+
+Useful tools:
+- http://sourceforge.net/projects/splitcsv
