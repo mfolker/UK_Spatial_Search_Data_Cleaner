@@ -5,10 +5,10 @@ namespace UKSSDC.Models
 {
     public class Region : Common
     {
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
-        public DbGeography Perimeter { get; private set; } //WKT
+        public DbGeography Perimeter { get; set; } //WKT
 
-        public RegionType Type { get; private set; }
+        public RegionType Type { get; set; }
     }
 }

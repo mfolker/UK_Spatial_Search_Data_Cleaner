@@ -78,7 +78,6 @@ namespace UKSSDC
                 {
                     Console.WriteLine("Processing Record: {0}", rawRecord);
 
-                    //TODO: HANDLE COMMA's in linestrings.
                     string[] x = SplitCsvLinePipe(rawRecord);
                     try
                     {
@@ -95,7 +94,7 @@ namespace UKSSDC
                             ReferenceNumber = x[3],
                             Type = x[4],
                             MaxSpeed = MaxSpeed,
-                            Created = DateTime.UtcNow
+                            Created = DateTime.UtcNow //TODO: Refactor to unit of work
                         };
 
                         roads.Add(road);
@@ -104,10 +103,10 @@ namespace UKSSDC
                     catch (Exception ex)
                     {
                         Console.WriteLine("The following record could not be added as a road:");
-                        Console.WriteLine(ex);
                         Console.WriteLine(rawRecord);
                         Logger.Error("The following record could not be added as a road. The exception produced is logged below.");
                         Logger.Error(rawRecord);
+                        Logger.Error(ex);
                         inCompleteFile.ProcessedRecords++;
                     }
                 }
@@ -126,7 +125,22 @@ namespace UKSSDC
             }
 
             int records = _unitOfWork.Roads.Count(x => x.Country == country);
-            return ((records / inCompleteFile.TotalRecords) * 100);
+
+            var completeFiles = _unitOfWork.ImportProgress.Where(x => x.Complete == true);
+
+            int totalProcessed = 0;
+
+            foreach (var completeFile in completeFiles)
+            {
+                string noCountry = completeFile.FileName;
+
+                Country fileCountry = DetermineCountry(noCountry);
+
+                if (fileCountry == country)
+                    totalProcessed = totalProcessed + completeFile.ProcessedRecords;
+            }
+
+            return ((records / totalProcessed) * 100);
         }
     }
 }

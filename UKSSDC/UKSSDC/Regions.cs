@@ -1,5 +1,10 @@
 ﻿using log4net;
 using System;
+using System.Collections.Generic;
+using System.Data.Entity.Migrations;
+using System.Data.Entity.Spatial;
+using System.IO;
+using System.Linq;
 using log4net.Config;
 using UKSSDC.Models;
 using UKSSDC.Models.Enums;
@@ -54,6 +59,9 @@ namespace UKSSDC
 
         private int Import(ImportProgress inCompleteFile)
         {
+            string unknownRegion = inCompleteFile.FileName;
+
+            RegionType regionType = DetermineRegionType(unknownRegion); 
 
             while (inCompleteFile.ProcessedRecords < inCompleteFile.TotalRecords)
             {
@@ -62,12 +70,84 @@ namespace UKSSDC
                 if (inCompleteFile.ProcessedRecords == 0)
                     inCompleteFile.ProcessedRecords++; //Plus one due to heading line in places csvs
 
+                var rawRecords = _csvReader.Read(inCompleteFile.FileName, (inCompleteFile.ProcessedRecords), true);
 
+                List<Region> regions = new List<Region>();
+
+                foreach (var rawRecord in rawRecords)
+                {
+                    Console.WriteLine("Processing Record: {0}", rawRecord);
+
+                    string[] x = SplitCsvLineRegion(rawRecord);
+                    try
+                    {
+                        Region region = new Region
+                        {
+                            Perimeter = DbGeography.MultiPolygonFromText(x[0], 4326),
+                            Name = x[1],
+                            Type = regionType
+                        };
+
+                        regions.Add(region);
+                        inCompleteFile.ProcessedRecords++;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("The following record could not be added as a region:");
+                        Console.WriteLine(rawRecord);
+                        Logger.Error("The following record could not be added as a region. The exception produced is logged below.");
+                        Logger.Error(rawRecord);
+                        Logger.Error(ex);
+                        inCompleteFile.ProcessedRecords++;
+                    }
+                }
+
+                _unitOfWork.Regions.AddRange(regions.AsEnumerable());
+                _unitOfWork.ImportProgress.AddOrUpdate(inCompleteFile);
+                _unitOfWork.Save();
 
             }
 
-            //TODO: Remove placeholder return
-            return 1;
+            if (inCompleteFile.ProcessedRecords == inCompleteFile.TotalRecords)
+            {
+                inCompleteFile.Complete = true;
+                _unitOfWork.ImportProgress.AddOrUpdate(inCompleteFile);
+                _unitOfWork.Save();
+            }
+
+            int records = _unitOfWork.Regions.Count(x => x.Type == regionType);
+            return ((records / inCompleteFile.ProcessedRecords) * 100); 
+
+        }
+
+        private string[] SplitCsvLineRegion(string rawRecord)
+        {
+            
+            
+            
+            throw new NotImplementedException();
+        }
+
+        private RegionType DetermineRegionType(string filePath)
+        {
+            string fileName = Path.GetFileNameWithoutExtension(filePath);
+
+            if (fileName.Contains("County"))
+            {
+                return RegionType.County;
+            }
+            else if (fileName.Contains("DistrictBoroughUnitaryWard"))
+            {
+                return RegionType.DistrictBoroughUnitaryWard;
+            }
+            else if (fileName.Contains("GreaterLondonConstituency"))
+            {
+                return RegionType.GreaterLondonConstituency;
+            }
+            else
+            {
+                return RegionType.DistrictBoroughUnitary;
+            }
         }
     }
 }
