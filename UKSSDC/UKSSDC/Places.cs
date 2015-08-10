@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Data.Entity.Spatial;
-using System.IO;
 using System.Linq;
 using log4net;
 using log4net.Config;
@@ -105,14 +105,14 @@ namespace UKSSDC
                 }
 
                 _unitOfWork.Places.AddRange(places.AsEnumerable());
-                _unitOfWork.ImportProgress.Add(inCompleteFile);
+                _unitOfWork.ImportProgress.AddOrUpdate(inCompleteFile);
                 _unitOfWork.Save();
             }
 
             if (inCompleteFile.ProcessedRecords == inCompleteFile.TotalRecords)
             {
                 inCompleteFile.Complete = true;
-                _unitOfWork.ImportProgress.Add(inCompleteFile);
+                _unitOfWork.ImportProgress.AddOrUpdate(inCompleteFile);
                 _unitOfWork.Save();
             }
 

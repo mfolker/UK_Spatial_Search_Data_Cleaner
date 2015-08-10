@@ -54,7 +54,20 @@ namespace UKSSDC
 
         private int Import(ImportProgress inCompleteFile)
         {
-            throw new NotImplementedException();
+
+            while (inCompleteFile.ProcessedRecords < inCompleteFile.TotalRecords)
+            {
+                //TODO: Hook up the last parameter in the function that is invoked below so that a choice can be made about chunks to read. 
+                
+                if (inCompleteFile.ProcessedRecords == 0)
+                    inCompleteFile.ProcessedRecords++; //Plus one due to heading line in places csvs
+
+
+
+            }
+
+            //TODO: Remove placeholder return
+            return 1;
         }
     }
 }

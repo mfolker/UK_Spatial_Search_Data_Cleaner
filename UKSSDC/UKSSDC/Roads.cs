@@ -8,6 +8,8 @@ using UKSSDC.Models;
 using UKSSDC.Models.Enums;
 using UKSSDC.Services.Data;
 using UKSSDC.Services.Import;
+using System.Data.Entity;
+using System.Data.Entity.Migrations;
 
 namespace UKSSDC
 {
@@ -111,7 +113,7 @@ namespace UKSSDC
                 }
 
                 _unitOfWork.Roads.AddRange(roads.AsEnumerable());
-                _unitOfWork.ImportProgress.Add(inCompleteFile). //.Add(inCompleteFile);
+                _unitOfWork.ImportProgress.AddOrUpdate(inCompleteFile);  
                 _unitOfWork.Save();
 
             }
@@ -119,7 +121,7 @@ namespace UKSSDC
             if (inCompleteFile.ProcessedRecords == inCompleteFile.TotalRecords)
             {
                 inCompleteFile.Complete = true;
-                _unitOfWork.ImportProgress.Add(inCompleteFile);
+                _unitOfWork.ImportProgress.AddOrUpdate(inCompleteFile);
                 _unitOfWork.Save();
             }
 
