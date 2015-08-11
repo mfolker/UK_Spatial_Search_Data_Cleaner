@@ -72,6 +72,7 @@
     <Compile Include="Services\Import\CsvReaderTests.cs" />
     <Compile Include="Services\Import\ProgressReporterTests.cs" />
     <Compile Include="LoggingTests.cs" />
+    <Compile Include="RegionsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UKSSDC\UKSSDC.csproj">

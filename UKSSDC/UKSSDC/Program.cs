@@ -57,8 +57,8 @@ namespace UKSSDC
                 reporter.Initialise(directory); 
 
                 //Places
-                //var places = scope.Resolve<Places>();
-                //bool placesComplete = places.Run();
+                var places = scope.Resolve<Places>();
+                bool placesComplete = places.Run();
 
                 //Postcodes
                 //var postcodes = scope.Resolve<Postcodes>();
@@ -75,7 +75,7 @@ namespace UKSSDC
                 //}
 
                 //Regions
-                var regions = scope.Resolve<Regions>();
+                //var regions = scope.Resolve<Regions>();
                 //bool regionsComplete = regions.Run();
 
                 //Roads
