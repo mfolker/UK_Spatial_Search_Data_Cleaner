@@ -122,10 +122,39 @@ namespace UKSSDC
 
         private string[] SplitCsvLineRegion(string rawRecord)
         {
-            
-            
-            
-            throw new NotImplementedException();
+            //rawRecord = StripEscapeCharacters(rawRecord);
+
+            string[] result = new string[2]; //TODO: Refactor to use lists
+
+            int quoteMark = 0;
+
+            string current = ""; 
+
+            foreach (char c in rawRecord)
+            {
+                if (c == '"')
+                {
+                    quoteMark++; 
+                }
+
+                current = current + c;
+
+                if (quoteMark == 2)
+                {
+                    result[0] = current;
+
+                    quoteMark = 0;
+                    current = "";
+                }
+            }
+
+            string[] x = current.Split(',');
+
+            result[1] = x[1];
+
+            result[0] = StripEscapeCharacters(result[0]);
+
+            return result; 
         }
 
         private RegionType DetermineRegionType(string filePath)

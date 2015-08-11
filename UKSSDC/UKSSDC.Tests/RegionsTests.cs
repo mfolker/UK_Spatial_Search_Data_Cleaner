@@ -27,7 +27,7 @@ namespace UKSSDC.Tests
 
             string filePath = "C:\\Users\\Matthew\\Desktop\\Project\\Implementation\\Maps Data\\UK_Spatial_Search_Data_Cleaner\\UKSSDC\\UKSSDC\\CSV\\Regions\\CountyRegion.csv";
 
-            var csvLines = File.ReadAllLines(filePath).Skip(1).ToList();
+            var csvLines = File.ReadAllLines(filePath).ToList();
 
             object[] param = { csvLines[1] };
 
