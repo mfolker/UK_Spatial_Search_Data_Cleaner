@@ -72,13 +72,15 @@ namespace UKSSDC
 
                 var rawRecords = _csvReader.Read(inCompleteFile.FileName, (inCompleteFile.ProcessedRecords), true);
 
+                --inCompleteFile.ProcessedRecords; 
+
                 List<Region> regions = new List<Region>();
 
                 foreach (var rawRecord in rawRecords)
                 {
                     Console.WriteLine("Processing Record: {0}", rawRecord);
 
-                    string[] x = SplitCsvLineRegion(rawRecord);
+                    List<string> x = SplitCsvLineRegion(rawRecord);
                     try
                     {
                         Region region = new Region
@@ -120,40 +122,20 @@ namespace UKSSDC
 
         }
 
-        private string[] SplitCsvLineRegion(string rawRecord)
+        private static List<string> SplitCsvLineRegion(string rawRecord)
         {
             //rawRecord = StripEscapeCharacters(rawRecord);
 
-            string[] result = new string[2]; //TODO: Refactor to use lists
+            string[] firstSplit = rawRecord.Split('"');
 
-            int quoteMark = 0;
+            string[] secondSplit = firstSplit[2].Split(',');
 
-            string current = ""; 
+            List<string> result = new List<string> {firstSplit[1], secondSplit[1]};
 
-            foreach (char c in rawRecord)
-            {
-                if (c == '"')
-                {
-                    quoteMark++; 
-                }
-
-                current = current + c;
-
-                if (quoteMark == 2)
-                {
-                    result[0] = current;
-
-                    quoteMark = 0;
-                    current = "";
-                }
-            }
-
-            string[] x = current.Split(',');
-
-            result[1] = x[1];
-
-            result[0] = StripEscapeCharacters(result[0]);
-
+            //result.Add(secondSplit[2]);
+            //result.Add(secondSplit[3]);
+            //result.Add(secondSplit[4]);
+            
             return result; 
         }
 

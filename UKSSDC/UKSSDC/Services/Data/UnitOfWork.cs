@@ -72,6 +72,16 @@ namespace UKSSDC.Services.Data
                 }
             }
 
+            foreach (ObjectStateEntry entry in (this as IObjectContextAdapter).ObjectContext.ObjectStateManager.GetObjectStateEntries(EntityState.Added))
+            {
+                if (!entry.IsRelationship)
+                {
+                    Common created = entry.Entity as Common;
+                    if (created != null)
+                        created.Created = now;
+                }
+            }
+
             return base.SaveChanges();
         }
 

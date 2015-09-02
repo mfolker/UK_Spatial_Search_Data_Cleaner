@@ -86,7 +86,7 @@ namespace UKSSDC
                             Location = DbGeography.PointFromText(x[0], 4326),
                             OsmId = Int64.Parse(x[1]),
                             Name = x[2],
-                            Created = DateTime.UtcNow
+                            //Created = DateTime.UtcNow
                             //TODO: Include type? 
                         };
 
