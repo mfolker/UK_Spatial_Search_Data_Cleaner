@@ -94,7 +94,6 @@ namespace UKSSDC
                             ReferenceNumber = x[3],
                             Type = x[4],
                             MaxSpeed = MaxSpeed,
-                            Created = DateTime.UtcNow //TODO: Refactor to unit of work
                         };
 
                         roads.Add(road);
@@ -126,7 +125,7 @@ namespace UKSSDC
 
             int records = _unitOfWork.Roads.Count(x => x.Country == country);
 
-            var completeFiles = _unitOfWork.ImportProgress.Where(x => x.Complete == true);
+            var completeFiles = _unitOfWork.ImportProgress.Where(x => x.Complete);
 
             int totalProcessed = 0;
 

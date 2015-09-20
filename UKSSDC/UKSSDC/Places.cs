@@ -70,7 +70,7 @@ namespace UKSSDC
                 if (inCompleteFile.ProcessedRecords == 0)
                     inCompleteFile.ProcessedRecords++; //Plus one due to heading line in places csvs
                 
-                var rawRecords = _csvReader.Read(inCompleteFile.FileName, (inCompleteFile.ProcessedRecords), true);
+                var rawRecords = _csvReader.Read(inCompleteFile.FileName, inCompleteFile.ProcessedRecords, true);
                 
                 List<Place> places = new List<Place>();
 

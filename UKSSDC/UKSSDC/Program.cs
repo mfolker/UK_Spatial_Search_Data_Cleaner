@@ -5,20 +5,23 @@ using log4net;
 using UKSSDC.Services.Data;
 using UKSSDC.Services.Import;
 
-//TODO: Consider restructuring so that each record can handled and recorded as successful or not.
+//TODO: Consider restructuring so that each record handled can be recorded as successful or not.
+
+//TODO: Version that strips out excess data
 
 namespace UKSSDC
 {
     class Program
     {
         private static IContainer Container { get; set; }
-        private static readonly ILog Logger = LogManager.GetLogger("Test"); 
-        
+        private static readonly ILog Logger = LogManager.GetLogger("Test");
+
         static void Main(string[] args)
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Program starting...");
 
+            Console.WriteLine(GlobalVar.ProjectRootPath);
             
             var builder = new ContainerBuilder();
             builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).As<IDependency>().AsImplementedInterfaces().InstancePerDependency();
@@ -90,6 +93,15 @@ namespace UKSSDC
             Console.WriteLine("Press Enter to close the program");
             Console.Read();
         }
+
+    }
+
+    public static class GlobalVar
+    {
+        public static readonly string RunPath = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+        public static readonly string ProjectRootPath = RunPath.Remove(RunPath.Length - 9);
+
 
     }
 }

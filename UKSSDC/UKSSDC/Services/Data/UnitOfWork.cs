@@ -108,8 +108,6 @@ namespace UKSSDC.Services.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            //TODO: Finish regions
-
             #region ImportProgress
 
             modelBuilder.Entity<ImportProgress>()
@@ -141,8 +139,6 @@ namespace UKSSDC.Services.Data
                 .HasColumnType("datetime2");
 
             #endregion
-
-            //TODO: Determine which WKT's should be unique and apply constraint. 
 
             #region Postcode
 

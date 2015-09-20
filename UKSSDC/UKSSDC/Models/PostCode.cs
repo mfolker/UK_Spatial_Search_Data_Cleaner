@@ -4,14 +4,16 @@ namespace UKSSDC.Models
 {
     public class Postcode : Common
     {
-        public string FullPostcode { get; private set; }
+        public string Area { get; set; }
 
-        public string PositionalQualityIndicator { get; private set; }
+        public string FullPostcode { get; set; }
 
-        public int Eastings { get; private set; }
+        public string PositionalQualityIndicator { get; set; }
 
-        public int Northings { get; private set; }
+        public int Easting { get; set; }
 
-        public DbGeography Location { get; private set; } //WKT
+        public int Northing { get; set; }
+
+        public DbGeography Location { get; set; } //WKT
     }
 }

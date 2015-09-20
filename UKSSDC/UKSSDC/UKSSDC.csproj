@@ -110,6 +110,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="CSV\Regions\Notes.md" />
+    <None Include="Data\GIQ60.dat" />
     <None Include="Migrations\Notes.md" />
     <None Include="Models\Notes.md" />
     <None Include="Notes.md" />
@@ -122,6 +123,7 @@
     <Folder Include="Logs\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Libs\GIQ60.dll" />
     <Content Include="Libs\log4net.dll" />
   </ItemGroup>
   <ItemGroup>
@@ -140,6 +142,17 @@
     <EmbeddedResource Include="Migrations\201508070956363_RoadsOSMIDLong.resx">
       <DependentUpon>201508070956363_RoadsOSMIDLong.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="GIQ60Lib">
+      <Guid>{F6551EB3-1384-4551-8060-0629E044F6E0}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

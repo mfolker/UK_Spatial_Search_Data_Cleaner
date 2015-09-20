@@ -132,10 +132,6 @@ namespace UKSSDC
 
             List<string> result = new List<string> {firstSplit[1], secondSplit[1]};
 
-            //result.Add(secondSplit[2]);
-            //result.Add(secondSplit[3]);
-            //result.Add(secondSplit[4]);
-            
             return result; 
         }
 
