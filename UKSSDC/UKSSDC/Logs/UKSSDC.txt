@@ -4033,3 +4033,5 @@ DEBUG 2015-08-10 17:36:48,232 10656ms Test                   TestMethod1        
 DEBUG 2015-08-10 17:39:33,260 10688ms Test                   TestMethod1        - Unit Test Message
 FATAL 2015-08-12 17:23:34,111 7476806ms UnitOfWork             Run                - The following file was not correctly stored: C:\Users\Matthew\Desktop\Project\Implementation\Maps Data\UK_Spatial_Search_Data_Cleaner\UKSSDC\UKSSDC\CSV\Regions\CountyRegion.csv
 FATAL 2015-09-02 23:05:56,825 154154ms UnitOfWork             Run                - The following file was not correctly stored: C:\Users\Matthew\Desktop\Project\Implementation\Maps Data\UK_Spatial_Search_Data_Cleaner\UKSSDC\UKSSDC\CSV\Regions\CountyRegion.csv
+FATAL 2015-09-21 23:45:43,217   547ms UnitOfWork             .ctor              - Could not find Grid InQuest data file.
+DEBUG 2015-09-22 00:15:17,640 17896ms Test                   TestMethod1        - Unit Test Message

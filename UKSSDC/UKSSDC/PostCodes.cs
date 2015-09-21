@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Data.Entity.Spatial;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using log4net;
@@ -35,8 +36,10 @@ namespace UKSSDC
 
             _converter = new OSTransformationClass();
 
-            string dir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            dir = System.IO.Path.Combine(dir, "GridInQuest");
+            //TODO: Change to use globals
+            string dir = "C:\\Documents and Settings\\All Users\\Application Data\\GridInQuest\\GIQ60"; 
+            //GlobalVar.ProjectRootPath; //Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            //dir = System.IO.Path.Combine(dir, "GridInQuest");
 
             //* Set the data file path
             if (_converter.SetDataFilesPath(dir) != eErrorCode.eSuccess)
@@ -151,6 +154,7 @@ namespace UKSSDC
         {
             eVertDatum output;
 
+            //TODO: Get input height data
             int inputHeight = 0;
 
             eErrorCode result = _converter.SetOSGB36(easting, northing, inputHeight, out output);
@@ -160,9 +164,14 @@ namespace UKSSDC
             double outputHeight;
             _converter.GetETRS89Geodetic(out outputLatitude, out outputLongitude, out outputHeight);
 
+            double latitude = Math.Round(outputLatitude, 4);
+            double longtitude = Math.Round(outputLongitude, 4); 
 
-            
-            throw new NotImplementedException();
+            string pointText = string.Format("POINT ({0} {1})", longtitude, latitude);
+
+            DbGeography point = DbGeography.PointFromText(pointText, 4326);
+
+            return point;
         }
     }
 }

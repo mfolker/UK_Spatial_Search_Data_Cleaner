@@ -33,11 +33,18 @@ namespace UKSSDC.Tests
 
             //Act
 
-            DbGeography AB101YN = (DbGeography) postcodesPrivateObject.Invoke("PostcodeWkt", param); 
+            DbGeography ab101Yn = (DbGeography) postcodesPrivateObject.Invoke("PostcodeWkt", param); 
 
-            //Assert
+            //Assert 
 
-            Assert.IsTrue(AB101YN.Latitude == -2.12451000395 && AB101YN.Longitude == 57.1427363893);
+            //"POINT (-2.124517 57.142721)"
+
+            Assert.IsTrue(ab101Yn.Longitude == -2.1245 && ab101Yn.Latitude == 57.1427);
         }
     }
 }
+
+
+/*
+ http://www.bgs.ac.uk/data/webservices/convertForm.cfm
+*/
