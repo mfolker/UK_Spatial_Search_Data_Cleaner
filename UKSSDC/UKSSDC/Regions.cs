@@ -1,128 +1,92 @@
-﻿using log4net;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Migrations;
 using System.Data.Entity.Spatial;
+using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
-using log4net.Config;
+using System.Threading.Tasks;
 using UKSSDC.Models;
 using UKSSDC.Models.Enums;
+using UKSSDC.Services.CsvReader;
 using UKSSDC.Services.Data;
-using UKSSDC.Services.Import;
+using UKSSDC.Services.ProgressReporter;
 
 namespace UKSSDC
 {
-    public class Regions : RecordsCommon, IRecord
+    class Regions : RecordsCommon
     {
-        private static readonly ILog Logger = LogManager.GetLogger(typeof(UnitOfWork));
-
         private readonly ICsvReader _csvReader;
         private readonly IProgressReporter _progressReporter;
         private readonly IUnitOfWork _unitOfWork;
 
-        public Regions(ICsvReader placeReader, IProgressReporter progressReporter, IUnitOfWork unitOfWork)
+        public Regions(ICsvReader csvReader, IProgressReporter progressReporter, IUnitOfWork unitOfWork)
         {
-            XmlConfigurator.Configure();
-
+            _csvReader = csvReader;
             _progressReporter = progressReporter;
-            _csvReader = placeReader;
             _unitOfWork = unitOfWork;
         }
 
-        public bool Run()
+        public void Run()
         {
-            bool success = true;
+            Console.WriteLine("Regions");
 
             var inCompleteFiles = _progressReporter.Report(RecordType.Region);
 
-            if (inCompleteFiles == null)
-                return true;
-
-            foreach (ImportProgress inCompleteFile in inCompleteFiles)
+            if (inCompleteFiles != null)
             {
-                string fileName = inCompleteFile.FileName;
-                int importSuccess = Import(inCompleteFile);
-                if (importSuccess != 100)
+                foreach (ImportProgress inCompleteFile in inCompleteFiles)
                 {
-                    success = false;
-                    string formatLog = string.Format("The following file was not correctly stored: {0}", fileName);
-                    Logger.Fatal(formatLog);
-                    Console.WriteLine("Problems encountered importing the following file:");
-                    Console.WriteLine(fileName);
-                    Console.WriteLine("This file is only {0}% complete", importSuccess);
+                    Stopwatch timer = new Stopwatch();
+                    timer.Start();
+                    double percentComplete = Import(inCompleteFile);
+                    timer.Stop();
+                    string result = String.Format("{0}% Complete in {1}", percentComplete.ToString(CultureInfo.InvariantCulture), timer.Elapsed);
+                    Console.WriteLine(result);
                 }
-            }
 
-            return success;
+            }
         }
 
-        private int Import(ImportProgress inCompleteFile)
+        public double Import(ImportProgress inCompleteFile)
         {
             string unknownRegion = inCompleteFile.FileName;
-
             RegionType regionType = DetermineRegionType(unknownRegion); 
+            Console.WriteLine(regionType.ToString());
 
-            while (inCompleteFile.ProcessedRecords < inCompleteFile.TotalRecords)
+            var rawRecords = _csvReader.Read(inCompleteFile.FileName, 1, false);
+
+            Parallel.ForEach(rawRecords, (rawRecord) =>
             {
-                //TODO: Hook up the last parameter in the function that is invoked below so that a choice can be made about chunks to read. 
-                
-                if (inCompleteFile.ProcessedRecords == 0)
-                    inCompleteFile.ProcessedRecords++; //Plus one due to heading line in places csvs
-
-                var rawRecords = _csvReader.Read(inCompleteFile.FileName, (inCompleteFile.ProcessedRecords), true);
-
-                --inCompleteFile.ProcessedRecords; 
-
-                List<Region> regions = new List<Region>();
-
-                foreach (var rawRecord in rawRecords)
+                List<string> x = SplitCsvLineRegion(rawRecord);
+                try
                 {
-                    Console.WriteLine("Processing Record: {0}", rawRecord);
-
-                    List<string> x = SplitCsvLineRegion(rawRecord);
-                    try
+                    Region region = new Region
                     {
-                        Region region = new Region
-                        {
-                            Perimeter = DbGeography.MultiPolygonFromText(x[0], 4326),
-                            Name = x[1],
-                            Type = regionType
-                        };
+                        Perimeter = DbGeography.MultiPolygonFromText(x[0], 4326),
+                        Name = x[1],
+                        Type = regionType
+                    };
 
-                        regions.Add(region);
-                        inCompleteFile.ProcessedRecords++;
-                    }
-                    catch (Exception ex)
+                    lock (_unitOfWork)
                     {
-                        Console.WriteLine("The following record could not be added as a region:");
-                        Console.WriteLine(rawRecord);
-                        Logger.Error("The following record could not be added as a region. The exception produced is logged below.");
-                        Logger.Error(rawRecord);
-                        Logger.Error(ex);
-                        inCompleteFile.ProcessedRecords++;
+                        _unitOfWork.Regions.Add(region);
                     }
                 }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("The following record could not be added as a region:");
+                    Console.WriteLine(rawRecord);
+                }
 
-                _unitOfWork.Regions.AddRange(regions.AsEnumerable());
-                _unitOfWork.ImportProgress.AddOrUpdate(inCompleteFile);
-                _unitOfWork.Save();
+            });
 
-            }
+            _unitOfWork.SaveChanges();
 
-            if (inCompleteFile.ProcessedRecords == inCompleteFile.TotalRecords)
-            {
-                inCompleteFile.Complete = true;
-                _unitOfWork.ImportProgress.AddOrUpdate(inCompleteFile);
-                _unitOfWork.Save();
-            }
-
-            int records = _unitOfWork.Regions.Count(x => x.Type == regionType);
-            return ((records / inCompleteFile.ProcessedRecords) * 100); 
-
+            return (_unitOfWork.Regions.Count(x => x.Type == regionType) / inCompleteFile.TotalRecords) * 100;
         }
 
-        private static List<string> SplitCsvLineRegion(string rawRecord)
+        private List<string> SplitCsvLineRegion(string rawRecord)
         {
             //rawRecord = StripEscapeCharacters(rawRecord);
 
@@ -130,9 +94,9 @@ namespace UKSSDC
 
             string[] secondSplit = firstSplit[2].Split(',');
 
-            List<string> result = new List<string> {firstSplit[1], secondSplit[1]};
+            List<string> result = new List<string> { firstSplit[1], secondSplit[1] };
 
-            return result; 
+            return result;
         }
 
         private RegionType DetermineRegionType(string filePath)

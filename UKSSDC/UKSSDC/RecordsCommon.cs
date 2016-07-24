@@ -1,18 +1,11 @@
 ﻿using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
 using UKSSDC.Models.Enums;
 
 namespace UKSSDC
 {
-    public class RecordsCommon
+    internal class RecordsCommon
     {
-        public RecordsCommon()
-        {
-            
-        }
-
-        //TODO: Move run methods to here.
+        //internal static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         //TODO: Modify breaks in files to |
         protected internal string[] SplitCsvLineComma(string csvLine)

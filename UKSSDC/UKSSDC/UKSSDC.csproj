@@ -4,13 +4,29 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D48BEB23-86A4-4747-B90B-7784DA9C0F5A}</ProjectGuid>
+    <ProjectGuid>{FCF402C2-D3BC-4D59-AAEE-FE97BD144F9F}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>UKSSDC</RootNamespace>
     <AssemblyName>UKSSDC</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -31,19 +47,42 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac">
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="EntityFramework">
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer">
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Libs\log4net.dll</HintPath>
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -55,46 +94,45 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\AutofacConfig.cs" />
-    <Compile Include="IRecord.cs" />
-    <Compile Include="Migrations\201508021150208_Initial.cs" />
-    <Compile Include="Migrations\201508021150208_Initial.Designer.cs">
-      <DependentUpon>201508021150208_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201601020211035_RegionCountry.cs" />
+    <Compile Include="Migrations\201601020211035_RegionCountry.Designer.cs">
+      <DependentUpon>201601020211035_RegionCountry.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201508022311102_AddTotalRecordsToImportProgress.cs" />
-    <Compile Include="Migrations\201508022311102_AddTotalRecordsToImportProgress.Designer.cs">
-      <DependentUpon>201508022311102_AddTotalRecordsToImportProgress.cs</DependentUpon>
+    <Compile Include="Migrations\201601020304366_AddOutwardCodeToPostcodes.cs" />
+    <Compile Include="Migrations\201601020304366_AddOutwardCodeToPostcodes.Designer.cs">
+      <DependentUpon>201601020304366_AddOutwardCodeToPostcodes.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201508070947508_Adddatatime2torecords.cs" />
-    <Compile Include="Migrations\201508070947508_Adddatatime2torecords.Designer.cs">
-      <DependentUpon>201508070947508_Adddatatime2torecords.cs</DependentUpon>
+    <Compile Include="Migrations\201601030029523_RemoveCountryFromRegion.cs" />
+    <Compile Include="Migrations\201601030029523_RemoveCountryFromRegion.Designer.cs">
+      <DependentUpon>201601030029523_RemoveCountryFromRegion.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201508070952376_PlacesOSMIDLong.cs" />
-    <Compile Include="Migrations\201508070952376_PlacesOSMIDLong.Designer.cs">
-      <DependentUpon>201508070952376_PlacesOSMIDLong.cs</DependentUpon>
+    <Compile Include="Migrations\201603201602469_SpatialSeachObjects.cs" />
+    <Compile Include="Migrations\201603201602469_SpatialSeachObjects.Designer.cs">
+      <DependentUpon>201603201602469_SpatialSeachObjects.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201508070956363_RoadsOSMIDLong.cs" />
-    <Compile Include="Migrations\201508070956363_RoadsOSMIDLong.Designer.cs">
-      <DependentUpon>201508070956363_RoadsOSMIDLong.cs</DependentUpon>
+    <Compile Include="Models\Enums\SpatialObjectType.cs" />
+    <Compile Include="Models\SpatialSearchObject.cs" />
+    <Compile Include="RecordsCommon.cs" />
+    <Compile Include="Migrations\201601011657221_AddImportProgress.cs" />
+    <Compile Include="Migrations\201601011657221_AddImportProgress.Designer.cs">
+      <DependentUpon>201601011657221_AddImportProgress.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201509212244285_PostcodeArea.cs" />
-    <Compile Include="Migrations\201509212244285_PostcodeArea.Designer.cs">
-      <DependentUpon>201509212244285_PostcodeArea.cs</DependentUpon>
+    <Compile Include="Models\ImportProgress.cs" />
+    <Compile Include="SearchCollectionBuilder.cs" />
+    <Compile Include="Services\Autofac\AutofacConfig.cs" />
+    <Compile Include="Migrations\201601011504422_Initial.cs" />
+    <Compile Include="Migrations\201601011504422_Initial.Designer.cs">
+      <DependentUpon>201601011504422_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="App_Start\IDependency.cs" />
-    <Compile Include="RecordsCommon.cs" />
-    <Compile Include="Services\Data\IUnitOfWork.cs" />
-    <Compile Include="Services\Import\IProgressReporter.cs" />
     <Compile Include="Models\Common.cs" />
     <Compile Include="Models\Enums\Country.cs" />
-    <Compile Include="Models\Enums\RegionType.cs" />
-    <Compile Include="Models\ImportProgress.cs" />
-    <Compile Include="Models\Place.cs" />
     <Compile Include="Models\Enums\PlaceType.cs" />
+    <Compile Include="Models\Enums\RecordType.cs" />
+    <Compile Include="Models\Enums\RegionType.cs" />
+    <Compile Include="Models\Place.cs" />
     <Compile Include="Models\Postcode.cs" />
     <Compile Include="Models\PostcodePerimeter.cs" />
-    <Compile Include="Models\Enums\RecordType.cs" />
     <Compile Include="Models\Region.cs" />
     <Compile Include="Models\Road.cs" />
     <Compile Include="Places.cs" />
@@ -104,50 +142,188 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Regions.cs" />
     <Compile Include="Roads.cs" />
+    <Compile Include="Services\Autofac\IDependency.cs" />
+    <Compile Include="Services\CsvReader\CsvReader.cs" />
+    <Compile Include="Services\CsvReader\ICsvReader.cs" />
+    <Compile Include="Services\Data\IUnitOfWork.cs" />
     <Compile Include="Services\Data\UnitOfWork.cs" />
-    <Compile Include="Services\Import\CsvReader.cs" />
-    <Compile Include="Services\Import\ICsvReader.cs" />
-    <Compile Include="Services\Import\ProgressReporter.cs" />
+    <Compile Include="Services\ProgressReporter\IProgressReporter.cs" />
+    <Compile Include="Services\ProgressReporter\ProgressReporter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="App.config" />
+    <None Include="CSV\Places\PlacesEngland.csv" />
+    <None Include="CSV\Places\PlacesEngland.csvt" />
+    <None Include="CSV\Places\PlacesScotland.csv" />
+    <None Include="CSV\Places\PlacesScotland.csvt" />
+    <None Include="CSV\Places\PlacesWales.csv" />
+    <None Include="CSV\Places\PlacesWales.csvt" />
+    <None Include="CSV\PostCodes\ab.csv" />
+    <None Include="CSV\PostCodes\al.csv" />
+    <None Include="CSV\PostCodes\b.csv" />
+    <None Include="CSV\PostCodes\ba.csv" />
+    <None Include="CSV\PostCodes\bb.csv" />
+    <None Include="CSV\PostCodes\bd.csv" />
+    <None Include="CSV\PostCodes\bh.csv" />
+    <None Include="CSV\PostCodes\bl.csv" />
+    <None Include="CSV\PostCodes\bn.csv" />
+    <None Include="CSV\PostCodes\br.csv" />
+    <None Include="CSV\PostCodes\bs.csv" />
+    <None Include="CSV\PostCodes\ca.csv" />
+    <None Include="CSV\PostCodes\cb.csv" />
+    <None Include="CSV\PostCodes\cf.csv" />
+    <None Include="CSV\PostCodes\ch.csv" />
+    <None Include="CSV\PostCodes\cm.csv" />
+    <None Include="CSV\PostCodes\co.csv" />
+    <None Include="CSV\PostCodes\cr.csv" />
+    <None Include="CSV\PostCodes\ct.csv" />
+    <None Include="CSV\PostCodes\cv.csv" />
+    <None Include="CSV\PostCodes\cw.csv" />
+    <None Include="CSV\PostCodes\da.csv" />
+    <None Include="CSV\PostCodes\dd.csv" />
+    <None Include="CSV\PostCodes\de.csv" />
+    <None Include="CSV\PostCodes\dg.csv" />
+    <None Include="CSV\PostCodes\dh.csv" />
+    <None Include="CSV\PostCodes\dl.csv" />
+    <None Include="CSV\PostCodes\dn.csv" />
+    <None Include="CSV\PostCodes\dt.csv" />
+    <None Include="CSV\PostCodes\dy.csv" />
+    <None Include="CSV\PostCodes\e.csv" />
+    <None Include="CSV\PostCodes\ec.csv" />
+    <None Include="CSV\PostCodes\eh.csv" />
+    <None Include="CSV\PostCodes\en.csv" />
+    <None Include="CSV\PostCodes\ex.csv" />
+    <None Include="CSV\PostCodes\fk.csv" />
+    <None Include="CSV\PostCodes\fy.csv" />
+    <None Include="CSV\PostCodes\g.csv" />
+    <None Include="CSV\PostCodes\gl.csv" />
+    <None Include="CSV\PostCodes\gu.csv" />
+    <None Include="CSV\PostCodes\ha.csv" />
+    <None Include="CSV\PostCodes\hd.csv" />
+    <None Include="CSV\PostCodes\hg.csv" />
+    <None Include="CSV\PostCodes\hp.csv" />
+    <None Include="CSV\PostCodes\hr.csv" />
+    <None Include="CSV\PostCodes\hs.csv" />
+    <None Include="CSV\PostCodes\hu.csv" />
+    <None Include="CSV\PostCodes\hx.csv" />
+    <None Include="CSV\PostCodes\ig.csv" />
+    <None Include="CSV\PostCodes\ip.csv" />
+    <None Include="CSV\PostCodes\iv.csv" />
+    <None Include="CSV\PostCodes\ka.csv" />
+    <None Include="CSV\PostCodes\kt.csv" />
+    <None Include="CSV\PostCodes\kw.csv" />
+    <None Include="CSV\PostCodes\ky.csv" />
+    <None Include="CSV\PostCodes\l.csv" />
+    <None Include="CSV\PostCodes\la.csv" />
+    <None Include="CSV\PostCodes\ld.csv" />
+    <None Include="CSV\PostCodes\le.csv" />
+    <None Include="CSV\PostCodes\ll.csv" />
+    <None Include="CSV\PostCodes\ln.csv" />
+    <None Include="CSV\PostCodes\ls.csv" />
+    <None Include="CSV\PostCodes\lu.csv" />
+    <None Include="CSV\PostCodes\m.csv" />
+    <None Include="CSV\PostCodes\me.csv" />
+    <None Include="CSV\PostCodes\mk.csv" />
+    <None Include="CSV\PostCodes\ml.csv" />
+    <None Include="CSV\PostCodes\n.csv" />
+    <None Include="CSV\PostCodes\ne.csv" />
+    <None Include="CSV\PostCodes\ng.csv" />
+    <None Include="CSV\PostCodes\nn.csv" />
+    <None Include="CSV\PostCodes\np.csv" />
+    <None Include="CSV\PostCodes\nr.csv" />
+    <None Include="CSV\PostCodes\nw.csv" />
+    <None Include="CSV\PostCodes\ol.csv" />
+    <None Include="CSV\PostCodes\ox.csv" />
+    <None Include="CSV\PostCodes\pa.csv" />
+    <None Include="CSV\PostCodes\pe.csv" />
+    <None Include="CSV\PostCodes\ph.csv" />
+    <None Include="CSV\PostCodes\pl.csv" />
+    <None Include="CSV\PostCodes\po.csv" />
+    <None Include="CSV\PostCodes\pr.csv" />
+    <None Include="CSV\PostCodes\rg.csv" />
+    <None Include="CSV\PostCodes\rh.csv" />
+    <None Include="CSV\PostCodes\rm.csv" />
+    <None Include="CSV\PostCodes\s.csv" />
+    <None Include="CSV\PostCodes\sa.csv" />
+    <None Include="CSV\PostCodes\se.csv" />
+    <None Include="CSV\PostCodes\sg.csv" />
+    <None Include="CSV\PostCodes\sk.csv" />
+    <None Include="CSV\PostCodes\sl.csv" />
+    <None Include="CSV\PostCodes\sm.csv" />
+    <None Include="CSV\PostCodes\sn.csv" />
+    <None Include="CSV\PostCodes\so.csv" />
+    <None Include="CSV\PostCodes\sp.csv" />
+    <None Include="CSV\PostCodes\sr.csv" />
+    <None Include="CSV\PostCodes\ss.csv" />
+    <None Include="CSV\PostCodes\st.csv" />
+    <None Include="CSV\PostCodes\sw.csv" />
+    <None Include="CSV\PostCodes\sy.csv" />
+    <None Include="CSV\PostCodes\ta.csv" />
+    <None Include="CSV\PostCodes\td.csv" />
+    <None Include="CSV\PostCodes\tf.csv" />
+    <None Include="CSV\PostCodes\tn.csv" />
+    <None Include="CSV\PostCodes\tq.csv" />
+    <None Include="CSV\PostCodes\tr.csv" />
+    <None Include="CSV\PostCodes\ts.csv" />
+    <None Include="CSV\PostCodes\tw.csv" />
+    <None Include="CSV\PostCodes\ub.csv" />
+    <None Include="CSV\PostCodes\w.csv" />
+    <None Include="CSV\PostCodes\wa.csv" />
+    <None Include="CSV\PostCodes\wc.csv" />
+    <None Include="CSV\PostCodes\wd.csv" />
+    <None Include="CSV\PostCodes\wf.csv" />
+    <None Include="CSV\PostCodes\wn.csv" />
+    <None Include="CSV\PostCodes\wr.csv" />
+    <None Include="CSV\PostCodes\ws.csv" />
+    <None Include="CSV\PostCodes\wv.csv" />
+    <None Include="CSV\PostCodes\yo.csv" />
+    <None Include="CSV\PostCodes\ze.csv" />
+    <None Include="CSV\Regions\CountyRegion.csv" />
+    <None Include="CSV\Regions\CountyRegion.csvt" />
+    <None Include="CSV\Regions\DistrictBoroughUnitaryRegion.csv" />
+    <None Include="CSV\Regions\DistrictBoroughUnitaryRegion.csvt" />
+    <None Include="CSV\Regions\DistrictBoroughUnitaryWardRegion_0.csv" />
+    <None Include="CSV\Regions\DistrictBoroughUnitaryWardRegion_1.csv" />
+    <None Include="CSV\Regions\DistrictBoroughUnitaryWardRegion_2.csv" />
+    <None Include="CSV\Regions\DistrictBoroughUnitaryWardRegion_3.csv" />
+    <None Include="CSV\Regions\GreaterLondonConstituencies.csv" />
+    <None Include="CSV\Regions\GreaterLondonConstituencies.csvt" />
     <None Include="CSV\Regions\Notes.md" />
+    <None Include="CSV\Roads\RoadsEngland.csvt" />
+    <None Include="CSV\Roads\RoadsEngland_0_0.csv" />
+    <None Include="CSV\Roads\RoadsEngland_1_0.csv" />
+    <None Include="CSV\Roads\RoadsEngland_2_0.csv" />
+    <None Include="CSV\Roads\RoadsEngland_3_0.csv" />
+    <None Include="CSV\Roads\RoadsEngland_4_0.csv" />
+    <None Include="CSV\Roads\RoadsEngland_5_0.csv" />
+    <None Include="CSV\Roads\RoadsScotland.csvt" />
+    <None Include="CSV\Roads\RoadsScotland_0_0.csv" />
+    <None Include="CSV\Roads\RoadsWales.csvt" />
+    <None Include="CSV\Roads\RoadsWales_0_0.csv" />
     <None Include="Data\GIQ60.dat" />
-    <None Include="Migrations\Notes.md" />
-    <None Include="Models\Notes.md" />
-    <None Include="Notes.md" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="CSV\Places\" />
-    <Folder Include="CSV\PostCodes\" />
-    <Folder Include="CSV\Roads\" />
-    <Folder Include="Logs\" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Libs\GIQ60.dll" />
-    <Content Include="Libs\log4net.dll" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201508021150208_Initial.resx">
-      <DependentUpon>201508021150208_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201601011504422_Initial.resx">
+      <DependentUpon>201601011504422_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508022311102_AddTotalRecordsToImportProgress.resx">
-      <DependentUpon>201508022311102_AddTotalRecordsToImportProgress.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201601011657221_AddImportProgress.resx">
+      <DependentUpon>201601011657221_AddImportProgress.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508070947508_Adddatatime2torecords.resx">
-      <DependentUpon>201508070947508_Adddatatime2torecords.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201601020211035_RegionCountry.resx">
+      <DependentUpon>201601020211035_RegionCountry.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508070952376_PlacesOSMIDLong.resx">
-      <DependentUpon>201508070952376_PlacesOSMIDLong.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201601020304366_AddOutwardCodeToPostcodes.resx">
+      <DependentUpon>201601020304366_AddOutwardCodeToPostcodes.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508070956363_RoadsOSMIDLong.resx">
-      <DependentUpon>201508070956363_RoadsOSMIDLong.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201601030029523_RemoveCountryFromRegion.resx">
+      <DependentUpon>201601030029523_RemoveCountryFromRegion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201509212244285_PostcodeArea.resx">
-      <DependentUpon>201509212244285_PostcodeArea.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201603201602469_SpatialSeachObjects.resx">
+      <DependentUpon>201603201602469_SpatialSeachObjects.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -160,6 +336,23 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

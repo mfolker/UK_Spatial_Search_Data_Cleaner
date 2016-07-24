@@ -69,6 +69,8 @@
     <Compile Include="RecordsCommonTests.cs" />
     <Compile Include="SearchTests.cs" />
     <Compile Include="Services\Data\UnitOfWorkTests.cs" />
+    <Compile Include="Services\HullWrapping\ConvexHullTests.cs" />
+    <Compile Include="Services\HullWrapping\ConcaveHullTests.cs" />
     <Compile Include="Services\Import\CsvReaderTests.cs" />
     <Compile Include="Services\Import\ProgressReporterTests.cs" />
     <Compile Include="LoggingTests.cs" />
@@ -76,15 +78,18 @@
     <Compile Include="PostcodesTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\UKSSDC\UKSSDC.csproj">
-      <Project>{d48beb23-86a4-4747-b90b-7784da9c0f5a}</Project>
-      <Name>UKSSDC</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
     <None Include="Notes.md" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UKSSDC\UKSSDC.csproj">
+      <Project>{fcf402c2-d3bc-4d59-aaee-fe97bd144f9f}</Project>
+      <Name>UKSSDC</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

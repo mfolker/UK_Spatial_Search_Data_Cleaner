@@ -2,9 +2,7 @@
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
-using System.Data.Entity.Validation;
-using log4net;
-using log4net.Config;
+using System.Threading.Tasks;
 using UKSSDC.Migrations;
 using UKSSDC.Models;
 
@@ -12,8 +10,6 @@ namespace UKSSDC.Services.Data
 {
     public class UnitOfWork : DbContext, IUnitOfWork
     {
-        private static readonly ILog Logger = LogManager.GetLogger(typeof (UnitOfWork)); 
-
         public DbSet<Place> Places { get; set; }
 
         public DbSet<Postcode> Postcodes { get; set; } 
@@ -26,38 +22,16 @@ namespace UKSSDC.Services.Data
 
         public DbSet<ImportProgress> ImportProgress { get; set; }
 
+        public DbSet<SpatialSearchObject> SpatialSearchObjects { get; set; } 
+
         public UnitOfWork() : base("DefaultConnection")
         {
-            //Configuration.LazyLoadingEnabled = false;
+            Configuration.LazyLoadingEnabled = false;
+            Configuration.AutoDetectChangesEnabled = false;
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<UnitOfWork, Configuration>());
             Database.Initialize(false);
         }
 
-
-        public void Save()
-        {
-            try
-            {
-                SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                
-                HandleError(ex);
-            }
-        }
-
-        public async void SaveASync()
-        {
-            try
-            {
-                int x = await SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                HandleError(ex);
-            }
-        }
 
         public override int SaveChanges()
         {
@@ -85,28 +59,45 @@ namespace UKSSDC.Services.Data
             return base.SaveChanges();
         }
 
-        private void HandleError(Exception ex)
+        public override Task<int> SaveChangesAsync()
         {
-            XmlConfigurator.Configure(); 
-
-            if (ex is DbEntityValidationException)
+            DateTime now = DateTime.UtcNow;
+            foreach (ObjectStateEntry entry in (this as IObjectContextAdapter).ObjectContext.ObjectStateManager.GetObjectStateEntries(EntityState.Added | EntityState.Modified))
             {
-                Logger.Info(ex);
-            }
-            else if (ex is DbUpdateException)
-            {
-                Logger.Warn(ex);
-            }
-            else
-            {
-                throw new NotImplementedException();
+                if (entry.IsRelationship) continue;
+                Common updated = entry.Entity as Common;
+                if (updated != null)
+                    updated.Updated = now;
             }
 
+            foreach (ObjectStateEntry entry in (this as IObjectContextAdapter).ObjectContext.ObjectStateManager.GetObjectStateEntries(EntityState.Added))
+            {
+                if (entry.IsRelationship) continue;
+                Common created = entry.Entity as Common;
+                if (created != null)
+                    created.Created = now;
+            }
+            //todo: TEST
+            return base.SaveChangesAsync();
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            #region SpatialObjects
+
+            modelBuilder.Entity<SpatialSearchObject>()
+                .Property(p => p.Created)
+                .IsRequired()
+                .HasColumnType("datetime2");
+
+            modelBuilder.Entity<SpatialSearchObject>()
+                .Property(p => p.Updated)
+                .IsRequired()
+                .HasColumnType("datetime2");
+
+            #endregion
 
             #region ImportProgress
 

@@ -1,39 +1,22 @@
 ﻿using System;
+using System.IO;
 using System.Reflection;
 using Autofac;
-using log4net;
+using log4net.Config;
 using UKSSDC.Services.Data;
-using UKSSDC.Services.Import;
+using UKSSDC.Services.ProgressReporter;
 
-//TODO: Consider restructuring so that each record handled can be recorded as successful or not.
-
-//TODO: Version that strips out excess data
+[assembly: XmlConfigurator(Watch = true)]
 
 namespace UKSSDC
 {
     class Program
     {
-        private static IContainer Container { get; set; }
-        private static readonly ILog Logger = LogManager.GetLogger("Test");
-
         static void Main(string[] args)
         {
+            IContainer container = AutofacConfig.GetContainer();
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Program starting...");
-
-            Console.WriteLine(GlobalVar.ProjectRootPath);
-            
-            var builder = new ContainerBuilder();
-            builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly()).As<IDependency>().AsImplementedInterfaces().InstancePerDependency();
-            builder.RegisterType<Places>().InstancePerLifetimeScope();
-            builder.RegisterType<Postcodes>().InstancePerLifetimeScope();
-            builder.RegisterType<PostcodePerimeters>().InstancePerLifetimeScope();
-            builder.RegisterType<Regions>().InstancePerLifetimeScope();
-            builder.RegisterType<Roads>().InstancePerLifetimeScope();
-
-            Container = builder.Build();
-
-            //Empty the database?
             Console.WriteLine("Would you like to truncate the database? Y / N");
             string x = Console.ReadLine();
 
@@ -49,59 +32,42 @@ namespace UKSSDC
                 uow.Database.ExecuteSqlCommand("DELETE FROM Roads");
             }
 
-            using (var scope = Container.BeginLifetimeScope())
+            using (var scope = container.BeginLifetimeScope())
             {
                 var reporter = scope.Resolve<IProgressReporter>();
-
                 Console.WriteLine("Please enter the directory where you location data is stored, or press enter to run on default:");
+                string directory = Console.ReadLine();
+                Console.WriteLine("Processing...");
+                reporter.Initialise(directory);
 
-                string directory = Console.ReadLine(); 
-
-                reporter.Initialise(directory); 
-
-                //Places
                 //var places = scope.Resolve<Places>();
-                //bool placesComplete = places.Run();
+                //places.Run();
 
-                //Postcodes
                 //var postcodes = scope.Resolve<Postcodes>();
-                //bool postcodesComplete = postcodes.Run();
+                //postcodes.Run();
 
-                //if (postcodesComplete)
-                //{
-                //    var postcodeperimeter = scope.Resolve<PostcodePerimeters>();
-                //    bool postcodeperimieterComplete = postcodeperimeter.Run();
-                //}
-                //else
-                //{
-                //    Console.WriteLine("Post code perimeters could not be built as the postcode import did not succeed.");
-                //}
+                //var postcodePerimeters = scope.Resolve<PostcodePerimeters>();
+                //postcodePerimeters.Run();
 
-                //Regions
-                var regions = scope.Resolve<Regions>();
-                bool regionsComplete = regions.Run();
+                //var regions = scope.Resolve<Regions>();
+                //regions.Run();
 
-                //Roads
-                //var roads = scope.Resolve<Roads>();
-                //bool roadsComplete = roads.Run();
-
-                //TODO: Success messages for each?
-                
-                Console.WriteLine("UKSSDC has finished running");
+                Console.WriteLine("Building the Spatial Search Table");
+                var searchCollectionBuilder = scope.Resolve<SearchCollectionBuilder>();
+                searchCollectionBuilder.Run();
             }
 
-            Console.WriteLine("Press Enter to close the program");
-            Console.Read();
         }
-
     }
 
     public static class GlobalVar
     {
-        public static readonly string RunPath = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        public static readonly string RunPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
         public static readonly string ProjectRootPath = RunPath.Remove(RunPath.Length - 9);
 
 
     }
 }
+
+

@@ -15,5 +15,7 @@ namespace UKSSDC.Models
         public int Northing { get; set; }
 
         public DbGeography Location { get; set; } //WKT
+
+        public string OutwardCode { get; set; }
     }
 }

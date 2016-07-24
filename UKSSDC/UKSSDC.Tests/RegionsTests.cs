@@ -32,7 +32,7 @@ namespace UKSSDC.Tests
             object[] param = { csvLines[1] };
 
             //Act
-            string[] result = (string[]) regionsPrivateObject.Invoke("SplitCsvLineRegion", param); 
+            List<string> result = (List<string>) regionsPrivateObject.Invoke("SplitCsvLineRegion", param); 
 
             //Assert
             result[1].ShouldBe("Buckinghamshire County"); //First lines of csv file too long to add to a unit test.
